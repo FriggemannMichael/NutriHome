@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#eceae4;font-family:'Patrick Hand',system-ui,sans-serif;color:#1a1a1a;-webkit-font-smoothing:antialiased}
+  a{color:#2f6b4f}a:hover{color:#245640}
+  /* ---- options-stack layout ---- */
+  .dv-turn{padding:44px 48px 40px;border-bottom:1px solid rgba(0,0,0,.09);scroll-margin-top:16px}
+  .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 6px}
+  .dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+  .dv-tname{font:400 15px/1.2 'Kalam',system-ui,sans-serif;color:#1a1a1a}
+  .dv-tsub{font:400 13px/1.4 system-ui,sans-serif;color:rgba(0,0,0,.5);margin:0 0 24px;max-width:640px}
+  .dv-opts{display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start}
+  .dv-opt{flex:none;display:flex;flex-direction:column;gap:11px;scroll-margin-top:16px}
+  .dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.09);color:#1a1a1a;border-radius:5px;text-decoration:none}
+  .dv-olabel{display:flex;align-items:baseline;gap:9px;font:400 13px/1.3 system-ui,sans-serif;color:rgba(0,0,0,.6);max-width:600px}
+  .dv-olabel b{color:#1a1a1a;font:600 13px/1.3 system-ui,sans-serif}
+  .dv-opt:target .dv-oid{background:#2f6b4f;color:#fff}
+  .dv-next{margin:26px 0 0;font:13px/1.6 system-ui,sans-serif;color:rgba(0,0,0,.55);max-width:680px}
+  .dv-row{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap}
+  /* ---- wireframe primitives ---- */
+  .ph{width:288px;background:#fff;border:2px solid #1a1a1a;border-radius:30px;padding:9px;box-shadow:5px 6px 0 rgba(0,0,0,.14)}
+  .ph-scr{border:1.5px solid #cfccc4;border-radius:22px;overflow:hidden;background:#fbfbf9;position:relative}
+  .ph-notch{height:16px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;font:11px system-ui;color:#8a8880}
+  .ph-cap{font:600 11px/1.2 system-ui,sans-serif;color:#8a8880;text-align:center;margin:2px 0 0;letter-spacing:.02em}
+  .scr{padding:12px 13px 0;display:flex;flex-direction:column;gap:11px}
+  .h1{font-size:20px;line-height:1.05;margin:0}
+  .h2{font-size:16px;margin:0}
+  .mut{color:#8a8880}
+  .sm{font:400 12px/1.3 system-ui,sans-serif;color:#6f6d66}
+  .xs{font:600 10px/1.2 ui-monospace,Menlo,monospace;color:#9a9890;letter-spacing:.04em;text-transform:uppercase}
+  .card{border:1.5px solid #22201c;border-radius:13px;padding:11px 12px;background:#fff;display:flex;flex-direction:column;gap:7px}
+  .soft{border-style:solid;border-color:#d8d5cd}
+  .ln{height:8px;border-radius:4px;background:#e4e1d9}
+  .ln.d{background:#d3d0c7}
+  .row{display:flex;align-items:center;gap:9px}
+  .btw{display:flex;align-items:center;justify-content:space-between;gap:9px}
+  .img{background:repeating-linear-gradient(45deg,#efece4 0 7px,#e4e0d6 7px 14px);border:1.5px solid #cbc7bd;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#9a968c;font:600 10px ui-monospace,Menlo,monospace}
+  .chip{border:1.4px solid #22201c;border-radius:20px;padding:3px 10px;font-size:13px;background:#fff;white-space:nowrap}
+  .chip.g{border-color:#2f6b4f;color:#2f6b4f;background:#eef5f0}
+  .btn{border:2px solid #22201c;border-radius:11px;padding:8px 0;text-align:center;font-size:15px;background:#fff}
+  .btn.pri{background:#2f6b4f;color:#fff;border-color:#2f6b4f}
+  .stat{border:1.5px solid #22201c;border-radius:11px;padding:8px 9px;flex:1;text-align:center;display:flex;flex-direction:column;gap:1px}
+  .num{font:700 19px/1 'Kalam',system-ui;color:#2f6b4f}
+  .num.k{color:#22201c}
+  .nav{display:flex;justify-content:space-around;border-top:1.5px solid #d8d5cd;padding:7px 4px 9px;background:#fff}
+  .nav .ni{display:flex;flex-direction:column;align-items:center;gap:3px;font:600 9px system-ui;color:#9a968c}
+  .nav .ni.on{color:#2f6b4f}
+  .dot{width:18px;height:18px;border:1.6px solid currentColor;border-radius:5px}
+  .dot.c{border-radius:50%}
+  .fab{width:46px;height:46px;border-radius:50%;background:#2f6b4f;color:#fff;border:2px solid #245640;display:flex;align-items:center;justify-content:center;font-size:24px;margin-top:-20px;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+  .step{display:flex;align-items:center;border:1.6px solid #22201c;border-radius:22px;overflow:hidden}
+  .step > div{width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:20px}
+  .step .val{flex:1;text-align:center;border-left:1.4px solid #22201c;border-right:1.4px solid #22201c;font:700 16px 'Kalam'}
+  .bar{height:9px;border:1.5px solid #22201c;border-radius:6px;overflow:hidden;background:#fff}
+  .bar > i{display:block;height:100%;background:#2f6b4f}
+  .seg{display:flex;border:1.6px solid #22201c;border-radius:10px;overflow:hidden;font-size:13px}
+  .seg > div{flex:1;text-align:center;padding:6px 0}
+  .seg > div.on{background:#22201c;color:#fff}
+  .ck{width:20px;height:20px;border:1.7px solid #22201c;border-radius:6px;flex:none}
+  .ck.on{background:#2f6b4f;border-color:#2f6b4f}
+  .scroll{max-height:520px;overflow:hidden}
+</style>
+</helmet>
+
+<section class="dv-turn" id="t3">
+  <div class="dv-thd"><a class="dv-tid" href="#t3">3</a><span class="dv-tname">Editor, Onboarding & der Flow Rezept → Einkaufsliste</span></div>
+  <p class="dv-tsub">Weiter in der Struktur von <a class="dv-oid" href="#1a">1a</a>, Einkaufen bestätigt als <a class="dv-oid" href="#2b">2b</a>. <a class="dv-oid" href="#3c">3c</a>–<a class="dv-oid" href="#3d">3d</a> zeigen den Kern-Moment: Zutaten zusammenführen und Vorrat abziehen, bevor die Liste entsteht.</p>
+  <div class="dv-opts">
+
+    <!-- ===== 3a Rezepteditor ===== -->
+    <div class="dv-opt" id="3a">
+      <div class="dv-olabel"><a class="dv-oid" href="#3a">3a</a><span><b>Rezepteditor.</b> Bild, Basisdaten, Zutaten mit Menge+Einheit+Zutatensuche, Schritte. Nährwerte laufen live mit.</span></div>
+      <div class="ph"><div class="ph-scr">
+        <div class="ph-notch"><span>9:41</span><span>▮▮▮ 100%</span></div>
+        <div class="scr scroll">
+          <div class="btw"><span class="sm">✕ Abbrechen</span><span class="chip g" style="padding:4px 12px">Speichern</span></div>
+          <div class="img" style="height:70px">+ BILD HINZUFÜGEN</div>
+          <div class="card soft row" style="padding:9px 11px"><span class="sm mut">Rezeptname …</span></div>
+          <div class="row"><div class="card soft row" style="flex:1;padding:9px 11px"><span class="sm">Portionen: <b>2</b></span></div><div class="card soft row" style="flex:1;padding:9px 11px"><span class="sm">Zeit: 35 Min</span></div></div>
+          <span class="xs">Zutaten</span>
+          <div class="card soft" style="gap:9px">
+            <div class="row"><div class="dot" style="width:14px;height:14px">≡</div><span style="flex:1">Rote Linsen</span><span class="chip" style="padding:2px 8px">150 g ▾</span></div>
+            <div class="row"><div class="dot" style="width:14px;height:14px">≡</div><span style="flex:1">Kokosmilch</span><span class="chip" style="padding:2px 8px">200 ml ▾</span></div>
+            <div class="row" style="border-top:1.4px dashed #d3d0c7;padding-top:8px"><div class="dot c" style="width:14px;height:14px;border-color:#2f6b4f">+</div><span class="sm mut" style="flex:1">Zutat suchen / neu anlegen …</span></div>
+          </div>
+          <!-- live nutrition -->
+          <div class="card" style="gap:5px;border-color:#2f6b4f;background:#eef5f0"><div class="btw"><span class="xs" style="color:#2f6b4f">Live berechnet · pro Portion</span></div><div class="row"><span class="chip g" style="background:#fff">520 kcal</span><span class="chip g" style="background:#fff">27g EW</span><span class="chip g" style="background:#fff">€ 1,80</span></div></div>
+          <span class="xs">Zubereitung</span>
+          <div class="card soft" style="gap:8px"><div class="row"><span class="num k" style="font-size:14px;width:16px">1.</span><span class="ln" style="flex:1"></span></div><div class="row"><span class="num k" style="font-size:14px;width:16px">2.</span><span class="ln d" style="flex:1"></span></div><div class="row"><span class="dot c" style="width:14px;height:14px;border-color:#2f6b4f">+</div><span class="sm mut">Schritt hinzufügen</span></div></div>
+        </div>
+      </div><div class="ph-cap">Rezepteditor · live Nährwerte</div></div>
+    </div>
+
+    <!-- ===== 3b Onboarding / Haushalt ===== -->
+    <div class="dv-opt" id="3b">
+      <div class="dv-olabel"><a class="dv-oid" href="#3b">3b</a><span><b>Onboarding · Haushalt.</b> Erstellen oder per Code beitreten — der gemeinsame Datenbereich für zwei Personen.</span></div>
+      <div class="ph"><div class="ph-scr">
+        <div class="ph-notch"><span>9:41</span><span>▮▮▮ 100%</span></div>
+        <div class="scr" style="gap:14px;padding-top:26px;min-height:520px">
+          <div class="dot c" style="width:52px;height:52px;border-width:2px;margin:6px auto 0"></div>
+          <div style="text-align:center"><div class="h1">Willkommen bei NutriHome</div><div class="sm" style="margin-top:4px">Rezepte, Einkauf & Vorrat gemeinsam an einem Ort.</div></div>
+          <div class="card" style="gap:8px;border-width:2px;margin-top:6px"><span class="h2">Neuen Haushalt erstellen</span><span class="sm">Du lädst danach eine zweite Person ein.</span><div class="btn pri">Erstellen</div></div>
+          <div style="text-align:center" class="sm mut">— oder —</div>
+          <div class="card soft" style="gap:8px"><span class="h2">Einem Haushalt beitreten</span><div class="row"><div class="card soft row" style="flex:1;padding:9px 11px"><span class="sm mut">Einladungscode …</span></div></div><div class="btn">Beitreten</div></div>
+          <div class="sm mut" style="text-align:center;margin-top:auto;padding-bottom:14px">In V1 gehörst du genau einem Haushalt an.</div>
+        </div>
+      </div><div class="ph-cap">Onboarding · Haushalt</div></div>
+    </div>
+
+    <!-- ===== 3c Add-to-list sheet ===== -->
+    <div class="dv-opt" id="3c">
+      <div class="dv-olabel"><a class="dv-oid" href="#3c">3c</a><span><b>Flow 1/2 · „+ Einkaufsliste".</b> Bottom-Sheet vom Rezept: Portionen wählen, Zielliste, Vorrat berücksichtigen.</span></div>
+      <div class="ph"><div class="ph-scr">
+        <div class="ph-notch"><span>9:41</span><span>▮▮▮ 100%</span></div>
+        <!-- dimmed recipe behind -->
+        <div style="filter:grayscale(1);opacity:.35;pointer-events:none"><div class="scr" style="padding-top:0"><div class="img" style="height:70px;margin:0 -13px;border-radius:0;border:0">FOTO</div><h2 class="h1">Linsen-Curry</h2><div class="row"><span class="chip">vegan</span><span class="chip">35′</span></div><div class="card"><div class="ln"></div><div class="ln d"></div></div></div></div>
+        <!-- sheet -->
+        <div style="position:absolute;left:0;right:0;bottom:0;background:#fff;border-top:2px solid #22201c;border-radius:20px 20px 0 0;padding:12px 14px 16px;display:flex;flex-direction:column;gap:11px;box-shadow:0 -6px 14px rgba(0,0,0,.1)">
+          <div style="width:38px;height:4px;border-radius:3px;background:#d3d0c7;margin:0 auto"></div>
+          <span class="h2">Zur Einkaufsliste hinzufügen</span>
+          <div class="btw"><span class="sm">Portionen</span><div class="step"><div>−</div><div class="val">4</div><div>+</div></div></div>
+          <div class="btw"><span class="sm">Zielliste</span><span class="chip">Wocheneinkauf ▾</span></div>
+          <div class="card soft row" style="justify-content:space-between;padding:10px 11px"><div><div style="font-size:14px">Vorrat berücksichtigen</div><div class="sm mut">vorhandene Mengen abziehen</div></div><div style="width:38px;height:22px;border:1.6px solid #2f6b4f;border-radius:14px;background:#2f6b4f;display:flex;align-items:center;justify-content:flex-end;padding:2px"><div style="width:16px;height:16px;border-radius:50%;background:#fff"></div></div></div>
+          <div class="btn pri">Weiter · 6 Zutaten prüfen</div>
+        </div>
+      </div><div class="ph-cap">Flow · Hinzufügen-Sheet</div></div>
+    </div>
+
+    <!-- ===== 3d Merge + pantry review ===== -->
+    <div class="dv-opt" id="3d">
+      <div class="dv-olabel"><a class="dv-oid" href="#3d">3d</a><span><b>Flow 2/2 · Zusammenführen &amp; Vorratsabzug.</b> Gleiche Zutaten addiert, Vorrat abgezogen — transparent vor dem Übernehmen.</span></div>
+      <div class="ph"><div class="ph-scr">
+        <div class="ph-notch"><span>9:41</span><span>▮▮▮ 100%</span></div>
+        <div class="scr scroll">
+          <div class="btw"><span class="sm">‹ zurück</span><h2 class="h2">Vor dem Hinzufügen</h2><span style="width:20px"></span></div>
+          <div class="sm mut">Aus 2 Rezepten · Vorrat abgezogen</div>
+          <!-- merged example -->
+          <div class="card" style="gap:7px;border-width:2px">
+            <div class="btw"><span class="h2">Möhren</span><span class="num" style="font-size:16px">→ 300 g</span></div>
+            <div class="sm">Curry 300 g + Bowl 400 g = 700 g</div>
+            <div class="sm" style="color:#b5462f">− 400 g im Vorrat (Kühlschrank)</div>
+            <div class="bar"><i style="width:43%"></i></div>
+          </div>
+          <div class="card soft" style="gap:6px"><div class="btw"><span class="h2">Rote Linsen</span><span class="num" style="font-size:16px">→ 150 g</span></div><div class="sm">kein Vorrat vorhanden</div></div>
+          <div class="card soft" style="gap:6px"><div class="btw"><span style="text-decoration:line-through;color:#a9a69d">Kokosmilch</span><span class="chip">gedeckt</span></div><div class="sm mut">200 ml vorhanden — nicht nötig</div></div>
+          <div class="card soft btw" style="padding:10px 11px"><span class="sm">4 Artikel werden übernommen</span><span class="num" style="font-size:15px">+ € 2,45</span></div>
+          <div class="btn pri">Auf „Wocheneinkauf" übernehmen</div>
+          <div class="sm mut" style="text-align:center">Vorrat wird erst beim Kochen reduziert</div>
+        </div>
+      </div><div class="ph-cap">Flow · Merge + Vorratsabzug</div></div>
+    </div>
+
+  </div>
+  <p class="dv-next">Fast alle Kernscreens stehen. Weiter mit: „<b>klickbarer Prototyp</b> von <a class="dv-oid" href="#1a">1a</a> mit echten Interaktionen" · „<b>Offline-/Sync-Zustände</b> (Badge, Warteschlange, Konflikt)" · oder „poliere eine Auswahl zu Hi-Fi-Screens".</p>
+</section>
+<section class="dv-turn" id="t2">
+  <div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">Richtung <a class="dv-oid" href="#1a">1a</a> ausgebaut — Rezepte, Einkaufen, Plan, Vorrat</span></div>
+  <p class="dv-tsub">Die klassische 5-Tab-Struktur über die übrigen Kernscreens gezogen. Bei der <b>Einkaufsansicht</b> zwei Interaktionsmodelle zur Wahl (<a class="dv-oid" href="#2b">2b</a> vs. <a class="dv-oid" href="#2c">2c</a>). Alles Low-Fi.</p>
+  <div class="dv-opts">
+
+    <!-- ===== 2a Rezeptübersicht ===== -->
+    <div class="dv-opt" id="2a">
+      <div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a><span><b>Rezeptübersicht.</b> Suche, Kategorien, Filter, Karten mit Kennzahlen & Favorit.</span></div>
+      <div class="ph"><div class="ph-scr">
+        <div class="ph-notch"><span>9:41</span><span>▮▮▮ 100%</span></div>
+        <div class="scr scroll">
+          <div class="btw"><h2 class="h1">Rezepte</h2><span class="chip">⚙ Filter</span></div>
+          <div class="card soft row" style="padding:9px 11px"><div class="dot c" style="border-color:#9a968c"></div><span class="sm">Suchen … z. B. „Curry", „&lt;500 kcal"</span></div>
+          <div class="row" style="flex-wrap:nowrap;overflow:hidden"><span class="chip g">Alle</span><span class="chip">Frühstück</span><span class="chip">Hauptgericht</span><span class="chip">Snack</span></div>
+          <div class="row"><span class="chip">vegan ✓</span><span class="chip">≤ 30 Min ✓</span><span class="sm mut">2 aktiv</span></div>
+          <!-- recipe card list -->
+          <div class="card" style="flex-direction:row;gap:11px;align-items:stretch;padding:9px">
+            <div class="img" style="width:66px;flex:none">FOTO</div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:5px">
+              <div class="btw"><span class="h2">Linsen-Curry</span><span class="chip g" style="padding:1px 7px">♥</span></div>
+              <div class="row"><span class="chip" style="padding:2px 7px;font-size:11px">520 kcal</span><span class="chip" style="padding:2px 7px;font-size:11px">€ 1,80</span><span class="chip" style="padding:2px 7px;font-size:11px">35′</span></div>
+            </div>
+          </div>
+          <div class="card soft" style="flex-direction:row;gap:11px;align-items:stretch;padding:9px">
+            <div class="img" style="width:66px;flex:none">FOTO</div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:5px">
+              <div class="btw"><span class="h2">Overnight Oats</span><span class="chip" style="padding:1px 7px;border-color:#c7c3b9;color:#c7c3b9">♡</span></div>
+              <div class="row"><span class="chip" style="padding:2px 7px;font-size:11px">340 kcal</span><span class="chip" style="padding:2px 7px;font-size:11px">€ 0,90</span><span class="chip" style="padding:2px 7px;font-size:11px">5′</span></div>
+            </div>
+          </div>
+          <div class="card soft" style="flex-direction:row;gap:11px;align-items:stretch;padding:9px">
+            <div class="img" style="width:66px;flex:none">FOTO</div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:5px">
+              <div class="btw"><span class="h2">Ofengemüse-Bowl</span><span class="chip" style="padding:1px 7px;border-color:#c7c3b9;color:#c7c3b9">♡</span></div>
+              <div class="row"><span class="chip" style="padding:2px 7px;font-size:11px">410 kcal</span><span class="chip" style="padding:2px 7px;font-size:11px">€ 1,40</span><span class="chip" style="padding:2px 7px;font-size:11px">40′</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="nav">
+          <div class="ni"><div class="dot"></div>Start</div>
+          <div class="ni on"><div class="dot"></div>Rezepte</div>
+          <div class="ni"><div class="dot"></div>Plan</div>
+          <div class="ni"><div class="dot"></div>Einkauf</div>
+          <div class="ni"><div class="dot"></div>Vorrat</div>
+        </div>
+      </div><div class="ph-cap">Rezepte · Liste + Filter</div></div>
+    </div>
+
+    <!-- ===== 2b Einkaufen Variante Checkliste ===== -->
+    <div class="dv-opt" id="2b">
+      <div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a><span><b>Einkaufen · Kategorie-Checkliste.</b> Nach Warengruppe gruppiert, Checkbox pro Zeile, geschätzte Preise, Fortschritt.</span></div>
+      <div class="ph"><div class="ph-scr">
+        <div class="ph-notch"><span>9:41</span><span>▮▮▮ 100%</span></div>
+        <div class="scr scroll">
+          <div class="btw"><h2 class="h1">Wocheneinkauf</h2><span class="sm">⋯</span></div>
+          <div class="card soft" style="gap:6px"><div class="btw"><span class="sm">8 von 14 erledigt</span><span class="num" style="font-size:15px">€ 42,10</span></div><div class="bar"><i style="width:57%"></i></div></div>
+          <span class="xs">Obst &amp; Gemüse</span>
+          <div class="card soft" style="gap:10px">
+            <div class="row"><div class="ck"></div><span style="flex:1">Möhren</span><span class="sm">700 g · €0,90</span></div>
+            <div class="row"><div class="ck"></div><span style="flex:1">Zwiebeln</span><span class="sm">3 St. · €0,40</span></div>
+            <div class="row"><div class="ck on"></div><span style="flex:1;text-decoration:line-through;color:#a9a69d">Ingwer</span><span class="sm mut">1 St.</span></div>
+          </div>
+          <span class="xs">Milchprodukte</span>
+          <div class="card soft" style="gap:10px">
+            <div class="row"><div class="ck"></div><span style="flex:1">Skyr Natur</span><span class="sm">500 g · €1,20</span></div>
+            <div class="row"><div class="ck on"></div><span style="flex:1;text-decoration:line-through;color:#a9a69d">Butter</span><span class="sm mut">250 g</span></div>
+          </div>
+          <span class="xs">Vorrat &amp; Trocken</span>
+          <div class="card soft" style="gap:10px">
+            <div class="row"><div class="ck"></div><span style="flex:1">Rote Linsen</span><span class="sm">500 g · €1,10</span></div>
+          </div>
+          <div class="btn">+ Artikel hinzufügen</div>
+        </div>
+        <div class="nav">
+          <div class="ni"><div class="dot"></div>Start</div>
+          <div class="ni"><div class="dot"></div>Rezepte</div>
+          <div class="ni"><div class="dot"></div>Plan</div>
+          <div class="ni on"><div class="dot"></div>Einkauf</div>
+          <div class="ni"><div class="dot"></div>Vorrat</div>
+        </div>
+      </div><div class="ph-cap">Einkauf · Checkliste</div></div>
+    </div>
+
+    <!-- ===== 2c Einkaufen Variante Einhand ===== -->
+    <div class="dv-opt" id="2c">
+      <div class="dv-olabel"><a class="dv-oid" href="#2c">2c</a><span><b>Einkaufen · Einhand-Modus.</b> Große Tap-Ziele, ganze Zeile abhaken, Reihenfolge nach Ladengang, feste Summenleiste unten.</span></div>
+      <div class="ph"><div class="ph-scr">
+        <div class="ph-notch"><span>9:41</span><span>▮▮▮ 100%</span></div>
+        <div class="scr scroll" style="padding-bottom:4px">
+          <div class="btw"><h2 class="h1">Einkaufen</h2><span class="chip">Aldi ▾</span></div>
+          <div class="seg"><div class="on">Nach Gang</div><div>A–Z</div><div>Offen</div></div>
+          <!-- big tappable rows -->
+          <div class="card" style="flex-direction:row;align-items:center;gap:11px;padding:13px 12px"><div class="ck" style="width:26px;height:26px"></div><div style="flex:1"><div class="h2">Möhren</div><div class="sm">700 g</div></div><span class="num" style="font-size:15px">€0,90</span></div>
+          <div class="card" style="flex-direction:row;align-items:center;gap:11px;padding:13px 12px"><div class="ck" style="width:26px;height:26px"></div><div style="flex:1"><div class="h2">Skyr Natur</div><div class="sm">500 g</div></div><span class="num" style="font-size:15px">€1,20</span></div>
+          <div class="card soft" style="flex-direction:row;align-items:center;gap:11px;padding:13px 12px;opacity:.55"><div class="ck on" style="width:26px;height:26px"></div><div style="flex:1"><div class="h2" style="text-decoration:line-through">Butter</div><div class="sm">250 g</div></div><span class="sm">✓</span></div>
+          <div class="card" style="flex-direction:row;align-items:center;gap:11px;padding:13px 12px"><div class="ck" style="width:26px;height:26px"></div><div style="flex:1"><div class="h2">Rote Linsen</div><div class="sm">500 g</div></div><span class="num" style="font-size:15px">€1,10</span></div>
+          <div class="sm mut" style="text-align:center">← nach links wischen: verschieben / löschen</div>
+        </div>
+        <!-- summary bar -->
+        <div style="border-top:1.5px solid #22201c;padding:10px 13px;display:flex;align-items:center;justify-content:space-between;background:#eef5f0"><div><div class="xs">6 offen · geschätzt</div><div class="num" style="font-size:18px">€ 42,10</div></div><div class="btn pri" style="padding:9px 18px">Fertig</div></div>
+        <div class="nav">
+          <div class="ni"><div class="dot"></div>Start</div>
+          <div class="ni"><div class="dot"></div>Rezepte</div>
+          <div class="ni"><div class="dot"></div>Plan</div>
+          <div class="ni on"><div class="dot"></div>Einkauf</div>
+          <div class="ni"><div class="dot"></div>Vorrat</div>
+        </div>
+      </div><div class="ph-cap">Einkauf · Einhand + Summenleiste</div></div>
+    </div>
+
+    <!-- ===== 2d Wochenplan ===== -->
+    <div class="dv-opt" id="2d">
+      <div class="dv-olabel"><a class="dv-oid" href="#2d">2d</a><span><b>Wochenplan.</b> Tage als Zeilen, Mahlzeiten-Slots, Wochen-Kennzahlen, Einkaufsliste aus dem Plan.</span></div>
+      <div class="ph"><div class="ph-scr">
+        <div class="ph-notch"><span>9:41</span><span>▮▮▮ 100%</span></div>
+        <div class="scr scroll">
+          <div class="btw"><span class="sm">‹</span><h2 class="h1">12.–18. Nov.</h2><span class="sm">›</span></div>
+          <div class="row"><div class="card soft stat" style="flex:1"><span class="num" style="font-size:15px">Ø 490</span><span class="sm">kcal/Tag</span></div><div class="card soft stat" style="flex:1"><span class="num" style="font-size:15px">€ 62</span><span class="sm">Woche</span></div></div>
+          <div class="card soft" style="gap:8px"><div class="btw"><span class="h2">Mo · 12.</span><span class="sm">2 geplant</span></div>
+            <div class="row"><span class="xs" style="width:34px">Früh</span><span class="chip" style="flex:1">Overnight Oats</span></div>
+            <div class="row"><span class="xs" style="width:34px">Mit</span><span class="chip" style="flex:1">Linsen-Curry</span></div>
+            <div class="row"><span class="xs" style="width:34px">Abend</span><span class="chip" style="flex:1;border-style:dashed;color:#a9a69d">+ hinzufügen</span></div>
+          </div>
+          <div class="card soft" style="gap:8px"><div class="btw"><span class="h2">Di · 13.</span><span class="sm">1 geplant</span></div>
+            <div class="row"><span class="xs" style="width:34px">Mit</span><span class="chip" style="flex:1">Ofengemüse-Bowl</span></div>
+            <div class="row"><span class="xs" style="width:34px">Abend</span><span class="chip" style="flex:1;border-style:dashed;color:#a9a69d">+ hinzufügen</span></div>
+          </div>
+          <div class="btn pri">Einkaufsliste aus Plan erstellen</div>
+        </div>
+        <div class="nav">
+          <div class="ni"><div class="dot"></div>Start</div>
+          <div class="ni"><div class="dot"></div>Rezepte</div>
+          <div class="ni on"><div class="dot"></div>Plan</div>
+          <div class="ni"><div class="dot"></div>Einkauf</div>
+          <div class="ni"><div class="dot"></div>Vorrat</div>
+        </div>
+      </div><div class="ph-cap">Plan · Woche</div></div>
+    </div>
+
+    <!-- ===== 2e Vorrat ===== -->
+    <div class="dv-opt" id="2e">
+      <div class="dv-olabel"><a class="dv-oid" href="#2e">2e</a><span><b>Vorrat.</b> Lagerorte als Segment, Menge + MHD, bald ablaufend hervorgehoben.</span></div>
+      <div class="ph"><div class="ph-scr">
+        <div class="ph-notch"><span>9:41</span><span>▮▮▮ 100%</span></div>
+        <div class="scr scroll">
+          <div class="btw"><h2 class="h1">Vorrat</h2><span class="chip">+ erfassen</span></div>
+          <div class="seg" style="font-size:11px"><div class="on">Kühlschr.</div><div>Gefrier</div><div>Schrank</div><div>Keller</div></div>
+          <div class="card" style="flex-direction:row;align-items:center;gap:10px;border-color:#b5462f"><div class="dot" style="border-color:#b5462f"></div><div style="flex:1"><div class="h2">Skyr Natur</div><div class="sm">500 g · offen</div></div><span class="chip" style="border-color:#b5462f;color:#b5462f">MHD 2 T.</span></div>
+          <div class="card soft" style="flex-direction:row;align-items:center;gap:10px"><div class="dot"></div><div style="flex:1"><div class="h2">Möhren</div><div class="sm">700 g</div></div><span class="chip">4 T.</span></div>
+          <div class="card soft" style="flex-direction:row;align-items:center;gap:10px"><div class="dot"></div><div style="flex:1"><div class="h2">Butter</div><div class="sm">250 g</div></div><span class="sm">— 3 Wo.</span></div>
+          <div class="card soft" style="flex-direction:row;align-items:center;gap:10px"><div class="dot"></div><div style="flex:1"><div class="h2">Eier</div><div class="sm">6 St.</div></div><span class="sm">— 1 Wo.</span></div>
+          <div class="sm mut" style="text-align:center">Beim Einkauf wird der Vorrat abgezogen</div>
+        </div>
+        <div class="nav">
+          <div class="ni"><div class="dot"></div>Start</div>
+          <div class="ni"><div class="dot"></div>Rezepte</div>
+          <div class="ni"><div class="dot"></div>Plan</div>
+          <div class="ni"><div class="dot"></div>Einkauf</div>
+          <div class="ni on"><div class="dot"></div>Vorrat</div>
+        </div>
+      </div><div class="ph-cap">Vorrat · Lagerorte</div></div>
+    </div>
+
+  </div>
+  <p class="dv-next">Nächste Schritte: entscheide dich beim Einkaufen für <a class="dv-oid" href="#2b">2b</a> oder <a class="dv-oid" href="#2c">2c</a> · „zeig den <b>Rezepteditor</b> + Flow Rezept → Einkaufsliste" · „<b>Onboarding / Haushalt beitreten</b>" · oder „mach aus <a class="dv-oid" href="#1a">1a</a> einen klickbaren Prototyp".</p>
+</section>
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Grundrichtung — Navigation, Dashboard & Rezeptdetail</span></div>
+  <p class="dv-tsub">Drei unterschiedliche App-Skelette. Jede Option zeigt die <b>Startseite</b> (Navigation + Dashboard-Dichte) und die <b>Rezeptdetailseite</b>, damit sichtbar wird, wie Nährwerte, Kosten und die Portionsberechnung — der Produkt-Kern — in Szene gesetzt werden. Low-Fi, es geht um Struktur, nicht Optik.</p>
+  <div class="dv-opts">
+
+    <!-- ============ 1a ============ -->
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a><span><b>Klassisch — 5 Tabs, datenreich.</b> Vertraute Bottom-Bar, dichtes Dashboard mit vielen Kennzahlen auf einen Blick.</span></div>
+      <div class="dv-row">
+        <!-- dashboard -->
+        <div>
+          <div class="ph"><div class="ph-scr">
+            <div class="ph-notch"><span>9:41</span><span>▮▮▮ 100%</span></div>
+            <div class="scr scroll">
+              <div class="btw"><div><div class="sm">Dienstag, 12. Nov.</div><div class="h1">Guten Morgen, Lea</div></div><div class="dot c" style="border-color:#22201c"></div></div>
+              <div class="card">
+                <div class="btw"><span class="xs">Heute essen</span><span class="sm">3 Mahlzeiten</span></div>
+                <div class="btw"><div class="row"><div class="dot"></div><span>Frühstück · Overnight Oats</span></div><span class="num k" style="font-size:14px">340</span></div>
+                <div class="btw"><div class="row"><div class="dot"></div><span>Mittag · Linsen-Curry</span></div><span class="num k" style="font-size:14px">520</span></div>
+                <div class="btw"><div class="row"><div class="dot"></div><span>Abend · Ofengemüse</span></div><span class="num k" style="font-size:14px">410</span></div>
+              </div>
+              <div class="row">
+                <div class="card soft" style="flex:1;gap:5px"><span class="xs">Einkauf offen</span><div class="btw"><span class="h2">8 / 14</span><span class="sm">Artikel</span></div><div class="bar"><i style="width:57%"></i></div></div>
+                <div class="card soft" style="flex:1;gap:5px"><span class="xs">Woche</span><div class="num">€ 62,40</div><span class="sm">geschätzt</span></div>
+              </div>
+              <div class="card soft" style="gap:6px">
+                <span class="xs">Bald ablaufend</span>
+                <div class="btw"><span>Skyr Natur</span><span class="chip" style="border-color:#b5462f;color:#b5462f">in 2 T.</span></div>
+                <div class="btw"><span>Möhren</span><span class="chip">in 4 T.</span></div>
+              </div>
+              <div class="btw"><span class="xs">Favoriten</span><span class="sm">alle ›</span></div>
+              <div class="row">
+                <div style="flex:1"><div class="img" style="height:60px">FOTO</div><div class="sm" style="margin-top:3px">Curry</div></div>
+                <div style="flex:1"><div class="img" style="height:60px">FOTO</div><div class="sm" style="margin-top:3px">Bowl</div></div>
+                <div style="flex:1"><div class="img" style="height:60px">FOTO</div><div class="sm" style="margin-top:3px">Suppe</div></div>
+              </div>
+            </div>
+            <div class="nav">
+              <div class="ni on"><div class="dot"></div>Start</div>
+              <div class="ni"><div class="dot"></div>Rezepte</div>
+              <div class="ni"><div class="dot"></div>Plan</div>
+              <div class="ni"><div class="dot"></div>Einkauf</div>
+              <div class="ni"><div class="dot"></div>Vorrat</div>
+            </div>
+          </div><div class="ph-cap">Startseite · 5-Tab</div></div>
+        </div>
+        <!-- recipe detail -->
+        <div>
+          <div class="ph"><div class="ph-scr">
+            <div class="ph-notch"><span>9:41</span><span>▮▮▮ 100%</span></div>
+            <div class="scr scroll" style="padding-top:0">
+              <div class="img" style="height:120px;margin:0 -13px;border-radius:0;border-left:0;border-right:0;border-top:0">REZEPTFOTO</div>
+              <div class="btw"><h2 class="h1">Linsen-Curry</h2><span class="chip g">♥</span></div>
+              <div class="row"><span class="chip">vegan</span><span class="chip">35 Min.</span><span class="chip">einfach</span></div>
+              <div class="card" style="gap:9px">
+                <div class="btw"><span class="xs">Portionen</span>
+                  <div class="step"><div>−</div><div class="val">2</div><div>+</div></div>
+                </div>
+                <div class="row" style="gap:8px">
+                  <div class="stat"><span class="num">520</span><span class="sm">kcal / P.</span></div>
+                  <div class="stat"><span class="num">€ 1,80</span><span class="sm">/ Portion</span></div>
+                  <div class="stat"><span class="num k">27g</span><span class="sm">Eiweiß</span></div>
+                </div>
+                <div class="sm mut">Mengen · Nährwerte · Kosten passen sich automatisch an</div>
+              </div>
+              <span class="xs">Zutaten</span>
+              <div class="card soft" style="gap:8px">
+                <div class="btw"><span>Rote Linsen</span><span class="sm">150 g</span></div>
+                <div class="btw"><span>Kokosmilch</span><span class="sm">200 ml</span></div>
+                <div class="btw"><span>Möhren</span><span class="sm">2 St.</span></div>
+                <div class="btw"><span>Zwiebel</span><span class="sm">1 St.</span></div>
+              </div>
+              <div class="row"><div class="btn" style="flex:1">Einplanen</div><div class="btn pri" style="flex:1">+ Einkaufsliste</div></div>
+            </div>
+          </div><div class="ph-cap">Rezeptdetail · Zahlen im Block</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1b ============ -->
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a><span><b>Fokussiert — 4 Tabs + zentraler Aktionsknopf.</b> Ruhiges Dashboard mit einem großen „Jetzt"-Fokus; Kennzahlen als dezente Chips.</span></div>
+      <div class="dv-row">
+        <div>
+          <div class="ph"><div class="ph-scr">
+            <div class="ph-notch"><span>9:41</span><span>▮▮▮ 100%</span></div>
+            <div class="scr scroll">
+              <div class="h1" style="margin-top:2px">Als Nächstes</div>
+              <div class="card" style="gap:9px;border-width:2px">
+                <div class="img" style="height:84px">MITTAGESSEN · FOTO</div>
+                <div class="btw"><span class="h2">Linsen-Curry</span><span class="sm">12:30</span></div>
+                <div class="row"><span class="chip g">520 kcal</span><span class="chip g">€ 1,80</span><span class="chip">35 Min.</span></div>
+                <div class="btn pri">Kochen starten</div>
+              </div>
+              <div class="btw"><span class="xs">Heute noch</span><span class="sm">2 ›</span></div>
+              <div class="card soft btw"><span>Abend · Ofengemüse</span><span class="sm">410 kcal</span></div>
+              <div class="row">
+                <div class="card soft" style="flex:1;gap:4px"><span class="xs">Einkauf</span><div class="btw"><span class="h2">8/14</span><div class="dot" style="border-radius:50%"></div></div></div>
+                <div class="card soft" style="flex:1;gap:4px"><span class="xs">Woche</span><div class="h2" style="color:#2f6b4f">€ 62</div></div>
+              </div>
+              <div class="card soft" style="gap:5px"><span class="xs">Läuft bald ab</span><div class="btw"><span>Skyr · 2 T.</span><span class="sm">verplanen ›</span></div></div>
+            </div>
+            <div class="nav" style="align-items:center">
+              <div class="ni on"><div class="dot"></div>Start</div>
+              <div class="ni"><div class="dot"></div>Rezepte</div>
+              <div class="fab">+</div>
+              <div class="ni"><div class="dot"></div>Einkauf</div>
+              <div class="ni"><div class="dot"></div>Mehr</div>
+            </div>
+          </div><div class="ph-cap">Startseite · Fokus + FAB</div></div>
+        </div>
+        <div>
+          <div class="ph"><div class="ph-scr">
+            <div class="ph-notch"><span>9:41</span><span>▮▮▮ 100%</span></div>
+            <div class="scr scroll" style="padding-top:0">
+              <div class="img" style="height:96px;margin:0 -13px;border-radius:0;border-left:0;border-right:0;border-top:0">REZEPTFOTO</div>
+              <h2 class="h1" style="margin-top:2px">Linsen-Curry</h2>
+              <!-- portions hero -->
+              <div class="card" style="gap:10px;border-width:2px;background:#eef5f0;border-color:#2f6b4f">
+                <div class="btw"><span class="xs" style="color:#2f6b4f">Für wie viele?</span><div class="step" style="border-color:#2f6b4f"><div>−</div><div class="val">2</div><div>+</div></div></div>
+                <div class="row"><span class="chip g" style="background:#fff">1040 kcal gesamt</span><span class="chip g" style="background:#fff">€ 3,60</span></div>
+              </div>
+              <div class="card soft" style="gap:8px">
+                <span class="xs">Pro Portion</span>
+                <div class="btw"><span class="sm">Kalorien</span><span class="num" style="font-size:16px">520</span></div>
+                <div class="btw"><span class="sm">Eiweiß</span><div class="bar" style="flex:1;margin:0 10px"><i style="width:54%"></i></div><span class="sm">27g</span></div>
+                <div class="btw"><span class="sm">Kohlenhydr.</span><div class="bar" style="flex:1;margin:0 10px"><i style="width:70%;background:#c9a24b"></i></div><span class="sm">62g</span></div>
+                <div class="btw"><span class="sm">Fett</span><div class="bar" style="flex:1;margin:0 10px"><i style="width:30%;background:#b5462f"></i></div><span class="sm">14g</span></div>
+              </div>
+              <div class="btw"><span class="xs">Zutaten (2 P.)</span><span class="sm">4 ›</span></div>
+              <div class="card soft" style="gap:7px">
+                <div class="btw"><span>Rote Linsen</span><span class="sm">150 g · € 0,45</span></div>
+                <div class="btw"><span>Kokosmilch</span><span class="sm">200 ml · € 0,70</span></div>
+              </div>
+              <div class="btn pri">+ auf Einkaufsliste</div>
+            </div>
+          </div><div class="ph-cap">Rezeptdetail · Portions-Hero</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 1c ============ -->
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a><span><b>Daten-zuerst — Hub-Karten, Segment-Nav oben.</b> Keine Bottom-Bar; Dashboard als Modul-Raster. Nährwerte & Kosten maximal betont.</span></div>
+      <div class="dv-row">
+        <div>
+          <div class="ph"><div class="ph-scr">
+            <div class="ph-notch"><span>9:41</span><span>▮▮▮ 100%</span></div>
+            <div class="scr scroll">
+              <div class="btw"><div class="h1">NutriHome</div><div class="row"><div class="dot c"></div><div class="dot"></div></div></div>
+              <div class="seg"><div class="on">Übersicht</div><div>Woche</div><div>Budget</div></div>
+              <div class="card" style="border-width:2px;gap:5px"><span class="xs">Diese Woche</span><div class="btw"><div class="num" style="font-size:26px">€ 62,40</div><div class="sm">von € 80<br>Budget</div></div><div class="bar"><i style="width:78%"></i></div></div>
+              <div class="row">
+                <div class="card" style="flex:1;gap:3px;text-align:center"><span class="num k" style="font-size:22px">14</span><span class="xs">Rezepte geplant</span></div>
+                <div class="card" style="flex:1;gap:3px;text-align:center"><span class="num" style="font-size:22px">490</span><span class="xs">Ø kcal / Portion</span></div>
+              </div>
+              <div class="row">
+                <div class="card soft" style="flex:1;gap:6px;min-height:66px"><div class="dot"></div><span class="xs">Rezepte</span><span class="sm">128</span></div>
+                <div class="card soft" style="flex:1;gap:6px;min-height:66px"><div class="dot"></div><span class="xs">Einkauf</span><span class="sm">8 offen</span></div>
+              </div>
+              <div class="row">
+                <div class="card soft" style="flex:1;gap:6px;min-height:66px"><div class="dot"></div><span class="xs">Plan</span><span class="sm">Mo–So</span></div>
+                <div class="card soft" style="flex:1;gap:6px;min-height:66px"><div class="dot"></div><span class="xs">Vorrat</span><span class="sm">3 ablaufend</span></div>
+              </div>
+            </div>
+          </div><div class="ph-cap">Startseite · Hub + Segment</div></div>
+        </div>
+        <div>
+          <div class="ph"><div class="ph-scr">
+            <div class="ph-notch"><span>9:41</span><span>▮▮▮ 100%</span></div>
+            <div class="scr scroll">
+              <div class="btw"><span class="sm">‹ Rezepte</span><span class="chip g">♥</span></div>
+              <h2 class="h1">Linsen-Curry</h2>
+              <div class="img" style="height:70px">FOTO</div>
+              <!-- big data panel emphasized -->
+              <div class="card" style="border-width:2px;gap:9px;background:#22201c;border-color:#22201c;color:#fff">
+                <div class="btw"><span class="xs" style="color:#b9b6ad">Portionen</span>
+                  <div class="step" style="border-color:#fff;color:#fff"><div>−</div><div class="val" style="border-color:#fff">2</div><div>+</div></div>
+                </div>
+                <div class="row">
+                  <div class="stat" style="border-color:#4a473f;color:#fff"><span class="num" style="color:#7dc49b">520</span><span class="sm" style="color:#b9b6ad">kcal/P.</span></div>
+                  <div class="stat" style="border-color:#4a473f;color:#fff"><span class="num" style="color:#7dc49b">€1,80</span><span class="sm" style="color:#b9b6ad">/P.</span></div>
+                  <div class="stat" style="border-color:#4a473f;color:#fff"><span class="num" style="color:#fff">27g</span><span class="sm" style="color:#b9b6ad">Eiweiß</span></div>
+                </div>
+                <div class="seg" style="border-color:#4a473f"><div class="on" style="background:#4a473f">pro Portion</div><div>gesamt</div><div>/100g</div></div>
+              </div>
+              <div class="card soft" style="gap:7px">
+                <span class="xs">Zutaten · Kosten je Position</span>
+                <div class="btw"><span>Rote Linsen 150g</span><span class="chip">€ 0,45</span></div>
+                <div class="btw"><span>Kokosmilch 200ml</span><span class="chip">€ 0,70</span></div>
+                <div class="btw"><span>Möhren 2 St.</span><span class="chip">€ 0,30</span></div>
+              </div>
+              <div class="btn pri">+ Einkaufsliste</div>
+            </div>
+          </div><div class="ph-cap">Rezeptdetail · Datenpanel</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="dv-next">Sag mir, welche Grundrichtung trägt — dann verzweige ich sie. Nächste Runden: „zeig die <b>Einkaufsansicht</b> für <a class="dv-oid" href="#1a">1a</a>", „mische Dashboard von <a class="dv-oid" href="#1b">1b</a> mit der Datenbetonung von <a class="dv-oid" href="#1c">1c</a>", „<b>Rezeptübersicht + Kartenlayouts</b>", oder „neue Richtungen".</p>
+</section>
+</x-dc>
+</body>
+</html>

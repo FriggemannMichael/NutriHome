@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#F4F7EA;font-family:'Manrope',system-ui,sans-serif;color:#332D56;-webkit-font-smoothing:antialiased}
+  a{color:#3E8C87;text-decoration:none}
+  a:hover{color:#332D56}
+</style>
+</helmet>
+
+<div style="width:1240px;margin:0 auto;padding:44px 44px 80px">
+
+  <!-- COVER -->
+  <section style="background:#332D56;border-radius:28px;padding:52px 54px;color:#F4F7EA;position:relative;overflow:hidden">
+    <div style="position:absolute;right:-60px;top:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,#3E8C87,transparent 70%);opacity:.55"></div>
+    <div style="position:absolute;right:120px;bottom:-90px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,#E3EEB2,transparent 70%);opacity:.25"></div>
+    <div style="display:flex;align-items:center;gap:13px;position:relative">
+      <div style="width:46px;height:46px;border-radius:15px;background:#71C0BB;display:flex;align-items:center;justify-content:center">
+        <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#332D56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>
+      </div>
+      <div style="font-family:'Bricolage Grotesque';font-weight:800;font-size:22px">NutriHome</div>
+      <span style="font-family:'Space Mono';font-size:11px;letter-spacing:.14em;color:#8B83B0;margin-left:6px">DESIGN SYSTEM · V1.0</span>
+    </div>
+    <div style="font-family:'Space Mono';font-size:11px;letter-spacing:.16em;color:#71C0BB;margin-top:34px;position:relative">VISUELLE SPRACHE · GESUNDE ERNÄHRUNG, GEMEINSAM ORGANISIERT</div>
+    <h1 style="font-family:'Bricolage Grotesque';font-weight:800;font-size:64px;line-height:1.02;letter-spacing:-.03em;margin:14px 0 0;position:relative;max-width:760px">Ein System für<br>bewusstes Essen.</h1>
+    <p style="font-size:16px;line-height:1.55;color:#C9C5DC;max-width:640px;margin:22px 0 0;position:relative">Farben, Schrift und Komponenten für die NutriHome PWA – Rezepte, Nährwerte, Preise, Einkaufslisten, Wochenplanung und Vorrat in einem konsistenten Look. Für gesundheitsbewusste Menschen, Sportler:innen und alle, die auf ihre Ernährung achten.</p>
+  </section>
+
+  <!-- 01 FARBEN -->
+  <section style="margin-top:34px">
+    <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:6px">
+      <span style="font-family:'Space Mono';font-size:14px;font-weight:700;color:#71C0BB">01</span>
+      <h2 style="font-family:'Bricolage Grotesque';font-weight:700;font-size:30px;margin:0">Farben</h2>
+    </div>
+    <p style="font-size:15px;color:#6B6494;max-width:640px;margin:0 0 24px;line-height:1.5">Drei Kernfarben tragen die Marke. Space Cadet verankert und strukturiert, Verdigris bringt Frische und markiert Aktionen, Cream öffnet die Fläche und dient als heller Grund.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+      <div style="border-radius:22px;overflow:hidden;border:1px solid #E3E6D2;background:#fff">
+        <div style="height:150px;background:#332D56"></div>
+        <div style="padding:16px 18px">
+          <div style="font-family:'Space Mono';font-size:10.5px;letter-spacing:.14em;color:#8B83B0">DOMINANT</div>
+          <div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:19px;margin-top:5px">Space Cadet</div>
+          <div style="font-family:'Space Mono';font-size:13px;color:#6B6494;margin-top:2px">#332D56</div>
+        </div>
+      </div>
+      <div style="border-radius:22px;overflow:hidden;border:1px solid #E3E6D2;background:#fff">
+        <div style="height:150px;background:#71C0BB"></div>
+        <div style="padding:16px 18px">
+          <div style="font-family:'Space Mono';font-size:10.5px;letter-spacing:.14em;color:#8B83B0">SECONDARY</div>
+          <div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:19px;margin-top:5px">Verdigris</div>
+          <div style="font-family:'Space Mono';font-size:13px;color:#6B6494;margin-top:2px">#71C0BB</div>
+        </div>
+      </div>
+      <div style="border-radius:22px;overflow:hidden;border:1px solid #E3E6D2;background:#fff">
+        <div style="height:150px;background:#E3EEB2"></div>
+        <div style="padding:16px 18px">
+          <div style="font-family:'Space Mono';font-size:10.5px;letter-spacing:.14em;color:#8B83B0">ACCENT</div>
+          <div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:19px;margin-top:5px">Cream</div>
+          <div style="font-family:'Space Mono';font-size:13px;color:#6B6494;margin-top:2px">#E3EEB2</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-family:'Space Mono';font-size:10.5px;letter-spacing:.14em;color:#8B83B0;margin:26px 0 12px">UNTERSTÜTZENDE TÖNE &amp; SEMANTIK</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+      <sc-for list="{{ tones }}" as="t" hint-placeholder-count="8">
+        <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #E3E6D2;border-radius:14px;padding:11px 13px">
+          <div style="{{ t.swatch }}"></div>
+          <div style="min-width:0">
+            <div style="font-weight:700;font-size:13.5px;line-height:1.1">{{ t.name }}</div>
+            <div style="font-family:'Space Mono';font-size:11.5px;color:#8B83B0;margin-top:2px">{{ t.hex }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- 02 TYPOGRAFIE -->
+  <section style="margin-top:48px">
+    <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:6px">
+      <span style="font-family:'Space Mono';font-size:14px;font-weight:700;color:#71C0BB">02</span>
+      <h2 style="font-family:'Bricolage Grotesque';font-weight:700;font-size:30px;margin:0">Typografie</h2>
+    </div>
+    <p style="font-size:15px;color:#6B6494;max-width:660px;margin:0 0 24px;line-height:1.5">Drei Schriften mit klaren Rollen: eine charakterstarke Headline, eine ruhige Fließschrift und eine Mono für Zahlen – Nährwerte und Preise bleiben tabellarisch lesbar.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+      <div style="background:#fff;border:1px solid #E3E6D2;border-radius:22px;padding:24px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Space Mono';font-size:10.5px;letter-spacing:.12em;color:#8B83B0">DISPLAY · HEADINGS</span><span style="font-family:'Space Mono';font-size:11px;color:#B0AAC6">400–800</span></div>
+        <div style="font-family:'Bricolage Grotesque';font-weight:800;font-size:64px;line-height:1;margin:18px 0 10px">Aa</div>
+        <div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:17px">Bricolage Grotesque</div>
+        <div style="font-size:13.5px;color:#8B83B0;margin-top:6px">Rezept · Wochenplan · Vorrat</div>
+      </div>
+      <div style="background:#fff;border:1px solid #E3E6D2;border-radius:22px;padding:24px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Space Mono';font-size:10.5px;letter-spacing:.12em;color:#8B83B0">BODY · UI</span><span style="font-family:'Space Mono';font-size:11px;color:#B0AAC6">400–700</span></div>
+        <div style="font-family:'Manrope';font-weight:800;font-size:64px;line-height:1;margin:18px 0 10px">Aa</div>
+        <div style="font-family:'Manrope';font-weight:700;font-size:17px">Manrope</div>
+        <div style="font-size:13.5px;color:#8B83B0;margin-top:6px">Klar und ruhig für Texte, Labels und Bedienelemente.</div>
+      </div>
+      <div style="background:#fff;border:1px solid #E3E6D2;border-radius:22px;padding:24px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-family:'Space Mono';font-size:10.5px;letter-spacing:.12em;color:#8B83B0">DATA · ZAHLEN</span><span style="font-family:'Space Mono';font-size:11px;color:#B0AAC6">400–700</span></div>
+        <div style="font-family:'Space Mono';font-weight:700;font-size:56px;line-height:1;margin:18px 0 10px">42g</div>
+        <div style="font-family:'Space Mono';font-weight:700;font-size:17px">Space Mono</div>
+        <div style="font-family:'Space Mono';font-size:13.5px;color:#8B83B0;margin-top:6px">520 kcal · 3,80 €</div>
+      </div>
+    </div>
+
+    <div style="background:#fff;border:1px solid #E3E6D2;border-radius:22px;padding:8px 26px;margin-top:18px">
+      <sc-for list="{{ scale }}" as="s" hint-placeholder-count="5">
+        <div style="display:flex;align-items:baseline;gap:24px;padding:15px 0;border-bottom:1px solid #F0F2E3">
+          <span style="font-family:'Space Mono';font-size:12px;color:#8B83B0;width:120px;flex:none">{{ s.spec }}</span>
+          <span style="{{ s.style }}">Frische Bowl</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- 03 KOMPONENTEN -->
+  <section style="margin-top:48px">
+    <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:6px">
+      <span style="font-family:'Space Mono';font-size:14px;font-weight:700;color:#71C0BB">03</span>
+      <h2 style="font-family:'Bricolage Grotesque';font-weight:700;font-size:30px;margin:0">Komponenten</h2>
+    </div>
+    <p style="font-size:15px;color:#6B6494;max-width:640px;margin:0 0 24px;line-height:1.5">Bausteine der App-Oberfläche – abgeleitet aus Farbe, Radius und Schrift.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start">
+
+      <!-- buttons -->
+      <div style="background:#fff;border:1px solid #E3E6D2;border-radius:22px;padding:22px 24px">
+        <div style="font-family:'Space Mono';font-size:10.5px;letter-spacing:.12em;color:#8B83B0;margin-bottom:16px">BUTTONS</div>
+        <div style="display:flex;flex-wrap:wrap;gap:11px;align-items:center">
+          <button style="background:#71C0BB;color:#332D56;border:none;border-radius:12px;padding:11px 20px;font-family:'Manrope';font-weight:800;font-size:14px;cursor:pointer">Primär</button>
+          <button style="background:#E3EEB2;color:#332D56;border:none;border-radius:12px;padding:11px 20px;font-family:'Manrope';font-weight:800;font-size:14px;cursor:pointer">Sekundär</button>
+          <button style="background:transparent;color:#3E8C87;border:1.5px solid #C7CBB4;border-radius:12px;padding:10px 20px;font-family:'Manrope';font-weight:800;font-size:14px;cursor:pointer">Ghost</button>
+          <button style="background:#EEF1DF;color:#B0AAC6;border:none;border-radius:12px;padding:11px 20px;font-family:'Manrope';font-weight:800;font-size:14px;cursor:not-allowed">Deaktiviert</button>
+          <button style="width:42px;height:42px;border-radius:12px;background:#332D56;color:#F4F7EA;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+        </div>
+        <div style="font-family:'Space Mono';font-size:10.5px;letter-spacing:.12em;color:#8B83B0;margin:24px 0 14px">TAGS &amp; FILTER</div>
+        <div style="display:flex;flex-wrap:wrap;gap:9px">
+          <span style="background:#71C0BB;color:#332D56;border-radius:999px;padding:7px 15px;font-size:12.5px;font-weight:700">Vegetarisch</span>
+          <span style="background:#fff;color:#332D56;border:1px solid #E3E6D2;border-radius:999px;padding:7px 15px;font-size:12.5px;font-weight:700">High Protein</span>
+          <span style="background:#fff;color:#332D56;border:1px solid #E3E6D2;border-radius:999px;padding:7px 15px;font-size:12.5px;font-weight:700">Low Carb</span>
+          <span style="background:#fff;color:#332D56;border:1px solid #E3E6D2;border-radius:999px;padding:7px 15px;font-size:12.5px;font-weight:700">Schnell</span>
+          <span style="background:#fff;color:#332D56;border:1px solid #E3E6D2;border-radius:999px;padding:7px 15px;font-size:12.5px;font-weight:700">Meal Prep</span>
+        </div>
+        <div style="font-family:'Space Mono';font-size:10.5px;letter-spacing:.12em;color:#8B83B0;margin:24px 0 14px">EINGABE</div>
+        <div style="display:flex;align-items:center;gap:10px;background:#F4F7EA;border:1px solid #E3E6D2;border-radius:14px;padding:13px 16px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8B83B0" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <span style="color:#8B83B0;font-size:14px">Rezept oder Zutat suchen…</span>
+        </div>
+      </div>
+
+      <!-- recipe card -->
+      <div style="background:#fff;border:1px solid #E3E6D2;border-radius:22px;padding:22px 24px">
+        <div style="font-family:'Space Mono';font-size:10.5px;letter-spacing:.12em;color:#8B83B0;margin-bottom:16px">REZEPTKARTE</div>
+        <div style="border:1px solid #E3E6D2;border-radius:18px;overflow:hidden">
+          <div style="height:96px;background:linear-gradient(135deg,#3E8C87,#71C0BB);display:flex;align-items:center;justify-content:center;position:relative">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h0a2 2 0 0 0 2-2V2M5 2v20M7 2v7M11 2v20c3 0 5-2 5-8s-2-10-5-10Z"/></svg>
+            <span style="position:absolute;top:10px;left:10px;background:rgba(51,45,86,.85);color:#E3EEB2;border-radius:999px;padding:2px 10px;font-size:10.5px;font-weight:700">High Protein</span>
+            <span style="position:absolute;top:10px;right:10px;background:rgba(255,255,255,.92);color:#3E8C87;border-radius:999px;padding:2px 10px;font-family:'Space Mono';font-size:11px;font-weight:700">3,80 €</span>
+          </div>
+          <div style="padding:14px 16px 16px">
+            <div style="font-weight:700;font-size:16px">Quinoa-Power-Bowl</div>
+            <div style="display:flex;align-items:center;gap:6px;margin-top:6px;color:#8B83B0;font-size:12.5px;font-weight:600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span style="font-family:'Space Mono'">25 Min</span> · 2 Portionen</div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px">
+              <div style="text-align:center;background:rgba(62,140,135,.12);border-radius:12px;padding:9px 2px"><div style="font-family:'Space Mono';font-weight:700;font-size:14px;color:#3E8C87">42g</div><div style="font-size:8.5px;font-weight:700;letter-spacing:.04em;color:#3E8C87;opacity:.75;margin-top:2px">PROTEIN</div></div>
+              <div style="text-align:center;background:rgba(224,169,75,.14);border-radius:12px;padding:9px 2px"><div style="font-family:'Space Mono';font-weight:700;font-size:14px;color:#C08A2E">58g</div><div style="font-size:8.5px;font-weight:700;letter-spacing:.04em;color:#C08A2E;opacity:.85;margin-top:2px">CARBS</div></div>
+              <div style="text-align:center;background:rgba(139,131,176,.16);border-radius:12px;padding:9px 2px"><div style="font-family:'Space Mono';font-weight:700;font-size:14px;color:#8B83B0">18g</div><div style="font-size:8.5px;font-weight:700;letter-spacing:.04em;color:#8B83B0;margin-top:2px">FETT</div></div>
+              <div style="text-align:center;background:rgba(95,168,91,.14);border-radius:12px;padding:9px 2px"><div style="font-family:'Space Mono';font-weight:700;font-size:14px;color:#4E9349">9g</div><div style="font-size:8.5px;font-weight:700;letter-spacing:.04em;color:#4E9349;margin-top:2px">FASER</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- nutrition ring -->
+      <div style="background:#fff;border:1px solid #E3E6D2;border-radius:22px;padding:22px 24px">
+        <div style="font-family:'Space Mono';font-size:10.5px;letter-spacing:.12em;color:#8B83B0;margin-bottom:16px">NÄHRWERT-RING</div>
+        <div style="display:flex;align-items:center;gap:22px">
+          <div style="width:110px;height:110px;flex:none;border-radius:50%;background:conic-gradient(#3E8C87 0 32%,#E0A94B 32% 78%,#8B83B0 78% 100%);display:flex;align-items:center;justify-content:center">
+            <div style="width:80px;height:80px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font-family:'Space Mono';font-weight:700;font-size:22px;line-height:1">520</span><span style="font-size:10px;font-weight:700;color:#8B83B0">kcal</span></div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:11px">
+            <div style="display:flex;align-items:center;justify-content:space-between;font-size:13.5px"><span style="display:flex;align-items:center;gap:8px;font-weight:600"><span style="width:10px;height:10px;border-radius:3px;background:#3E8C87"></span>Protein</span><span style="font-family:'Space Mono';font-weight:700">42g</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;font-size:13.5px"><span style="display:flex;align-items:center;gap:8px;font-weight:600"><span style="width:10px;height:10px;border-radius:3px;background:#E0A94B"></span>Kohlenhydrate</span><span style="font-family:'Space Mono';font-weight:700">58g</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;font-size:13.5px"><span style="display:flex;align-items:center;gap:8px;font-weight:600"><span style="width:10px;height:10px;border-radius:3px;background:#8B83B0"></span>Fett</span><span style="font-family:'Space Mono';font-weight:700">18g</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- shopping + week + pantry -->
+      <div style="background:#fff;border:1px solid #E3E6D2;border-radius:22px;padding:22px 24px">
+        <div style="font-family:'Space Mono';font-size:10.5px;letter-spacing:.12em;color:#8B83B0;margin-bottom:14px">EINKAUFSLISTEN-EINTRAG</div>
+        <div style="display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid #F0F2E3"><span style="width:21px;height:21px;border-radius:7px;border:2px solid #C7CBB4;background:#fff;flex:none"></span><span style="flex:1;font-weight:600;font-size:14px">Quinoa 250g</span><span style="font-family:'Space Mono';font-size:12.5px;color:#8B83B0">1×</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid #F0F2E3"><span style="width:21px;height:21px;border-radius:7px;background:#3E8C87;flex:none;display:flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span style="flex:1;font-weight:600;font-size:14px;color:#B0AAC6;text-decoration:line-through">Kichererbsen</span><span style="font-family:'Space Mono';font-size:12.5px;color:#8B83B0">2 Dosen</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:9px 0"><span style="width:21px;height:21px;border-radius:7px;border:2px solid #C7CBB4;background:#fff;flex:none"></span><span style="flex:1;font-weight:600;font-size:14px">Avocado</span><span style="font-family:'Space Mono';font-size:12.5px;color:#8B83B0">2 Stk</span></div>
+        </div>
+
+        <div style="font-family:'Space Mono';font-size:10.5px;letter-spacing:.12em;color:#8B83B0;margin:22px 0 12px">WOCHENPLAN-KACHEL</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:9px">
+          <div style="background:#EAF5F4;border:1px solid #C7E6E4;border-radius:12px;padding:11px 8px;text-align:center"><div style="font-size:10.5px;font-weight:800;color:#3E8C87">MO</div><div style="font-size:12px;font-weight:700;margin-top:6px">Bowl</div></div>
+          <div style="background:#EAF5F4;border:1px solid #C7E6E4;border-radius:12px;padding:11px 8px;text-align:center"><div style="font-size:10.5px;font-weight:800;color:#3E8C87">DI</div><div style="font-size:12px;font-weight:700;margin-top:6px">Curry</div></div>
+          <div style="background:#EAF5F4;border:1px solid #C7E6E4;border-radius:12px;padding:11px 8px;text-align:center"><div style="font-size:10.5px;font-weight:800;color:#3E8C87">MI</div><div style="font-size:12px;font-weight:700;margin-top:6px">Salat</div></div>
+          <div style="background:#FAFBF2;border:1px dashed #C7CBB4;border-radius:12px;padding:11px 8px;text-align:center"><div style="font-size:10.5px;font-weight:800;color:#8B83B0">DO</div><div style="font-size:18px;font-weight:700;margin-top:2px;color:#B0AAC6">+</div></div>
+        </div>
+
+        <div style="font-family:'Space Mono';font-size:10.5px;letter-spacing:.12em;color:#8B83B0;margin:22px 0 12px">VORRATS-ITEM</div>
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span style="font-weight:600">Haferflocken</span><span style="font-family:'Space Mono';font-weight:700;color:#5FA85B">80%</span></div><div style="height:8px;background:#EEF1DF;border-radius:999px;overflow:hidden"><div style="height:100%;width:80%;background:#5FA85B;border-radius:999px"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span style="font-weight:600">Kichererbsen</span><span style="font-family:'Space Mono';font-weight:700;color:#E0A94B">40%</span></div><div style="height:8px;background:#EEF1DF;border-radius:999px;overflow:hidden"><div style="height:100%;width:40%;background:#E0A94B;border-radius:999px"></div></div></div>
+          <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span style="font-weight:600">Olivenöl</span><span style="font-family:'Space Mono';font-weight:700;color:#E0A94B">15%</span></div><div style="height:8px;background:#EEF1DF;border-radius:999px;overflow:hidden"><div style="height:100%;width:15%;background:#E0A94B;border-radius:999px"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 RADIUS & ABSTÄNDE -->
+  <section style="margin-top:48px">
+    <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:20px">
+      <span style="font-family:'Space Mono';font-size:14px;font-weight:700;color:#71C0BB">04</span>
+      <h2 style="font-family:'Bricolage Grotesque';font-weight:700;font-size:30px;margin:0">Radius &amp; Abstände</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px">
+      <div style="background:#fff;border:1px solid #E3E6D2;border-radius:22px;padding:22px;text-align:center"><div style="width:74px;height:74px;margin:0 auto;background:#332D56;border-radius:12px"></div><div style="font-weight:700;font-size:14px;margin-top:14px">Klein</div><div style="font-family:'Space Mono';font-size:12.5px;color:#8B83B0;margin-top:2px">12px</div></div>
+      <div style="background:#fff;border:1px solid #E3E6D2;border-radius:22px;padding:22px;text-align:center"><div style="width:74px;height:74px;margin:0 auto;background:#3E8C87;border-radius:18px"></div><div style="font-weight:700;font-size:14px;margin-top:14px">Standard</div><div style="font-family:'Space Mono';font-size:12.5px;color:#8B83B0;margin-top:2px">18px</div></div>
+      <div style="background:#fff;border:1px solid #E3E6D2;border-radius:22px;padding:22px;text-align:center"><div style="width:74px;height:74px;margin:0 auto;background:#71C0BB;border-radius:22px"></div><div style="font-weight:700;font-size:14px;margin-top:14px">Karte</div><div style="font-family:'Space Mono';font-size:12.5px;color:#8B83B0;margin-top:2px">22px</div></div>
+      <div style="background:#fff;border:1px solid #E3E6D2;border-radius:22px;padding:22px;text-align:center"><div style="width:74px;height:74px;margin:0 auto;background:#E3EEB2;border-radius:999px"></div><div style="font-weight:700;font-size:14px;margin-top:14px">Pill</div><div style="font-family:'Space Mono';font-size:12.5px;color:#8B83B0;margin-top:2px">999px</div></div>
+    </div>
+  </section>
+
+  <div style="margin-top:44px;padding-top:22px;border-top:1px solid #E3E6D2;font-family:'Space Mono';font-size:11.5px;color:#8B83B0;text-align:center;letter-spacing:.04em">NutriHome · Design System · Space Cadet / Verdigris / Cream · Bricolage · Manrope · Space Mono</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1240,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    const sw = (c) => ({width:'34px',height:'34px',flex:'none',borderRadius:'10px',background:c,border:c==='#E3EEB2'||c==='#F4F7EA'?'1px solid #D6D9C4':'none'});
+    const tones = [
+      ['Space Cadet','#332D56'],['Cadet Soft','#8B83B0'],['Verdigris','#71C0BB'],['Verdigris Deep','#3E8C87'],
+      ['Cream','#E3EEB2'],['Cream Wash','#F4F7EA'],['Erfolg','#5FA85B'],['Warnung','#E0A94B']
+    ].map(([name,hex]) => ({name, hex, swatch: sw(hex)}));
+
+    const scale = [
+      ['H1 · 72 / 800', {fontFamily:"'Bricolage Grotesque'",fontWeight:800,fontSize:'52px',lineHeight:1,letterSpacing:'-.02em'}],
+      ['H2 · 40 / 700', {fontFamily:"'Bricolage Grotesque'",fontWeight:700,fontSize:'36px',lineHeight:1}],
+      ['H3 · 28 / 700', {fontFamily:"'Bricolage Grotesque'",fontWeight:700,fontSize:'26px'}],
+      ['H4 · 20 / 600', {fontFamily:"'Bricolage Grotesque'",fontWeight:600,fontSize:'20px'}],
+      ['Body · 16 / 400', {fontFamily:"'Manrope'",fontWeight:400,fontSize:'16px'}]
+    ].map(([spec,style]) => ({spec, style}));
+
+    return { tones, scale };
+  }
+}
+</script>
+</body>
+</html>

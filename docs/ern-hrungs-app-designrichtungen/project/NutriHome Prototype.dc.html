@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#E8EBDA;font-family:'Manrope',system-ui,sans-serif;color:#332D56;-webkit-font-smoothing:antialiased}
+  a{color:#3E8C87;text-decoration:none}a:hover{color:#332D56}
+  .sa::-webkit-scrollbar{width:0;display:none}
+  .mono{font-family:'Space Mono',monospace}
+  .bric{font-family:'Bricolage Grotesque',sans-serif}
+  @keyframes toastin{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
+  @keyframes nhfade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;justify-content:center;align-items:flex-start;padding:26px 16px">
+ <div style="width:390px;background:#332D56;border-radius:46px;padding:11px;box-shadow:0 24px 60px rgba(51,45,86,.32)">
+  <div style="position:relative;width:368px;height:772px;background:#F4F7EA;border-radius:35px;overflow:hidden">
+
+   <div style="height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px">
+     <span class="mono" style="font-weight:700">9:41</span>
+     <span class="mono" style="letter-spacing:.14em;color:#8B83B0;font-size:10px">NUTRIHOME</span>
+   </div>
+
+   <div class="sa" style="position:absolute;top:46px;bottom:66px;left:0;right:0;overflow-y:auto">
+
+     <!-- ===================== START ===================== -->
+     <sc-if value="{{ isStart }}" hint-placeholder-val="{{ true }}">
+       <div style="padding:8px 18px 22px;display:flex;flex-direction:column;gap:15px;animation:nhfade .3s ease">
+         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-top:4px">
+           <div>
+             <div class="mono" style="font-size:11px;letter-spacing:.06em;color:#8B83B0;font-weight:700">DIENSTAG · 12. NOV.</div>
+             <div class="bric" style="font-size:27px;font-weight:800;letter-spacing:-.02em;margin-top:4px">Guten Morgen,<br>Lena</div>
+           </div>
+           <div onClick="{{ logout }}" style="display:flex;margin-top:4px;cursor:pointer" title="Abmelden"><div style="width:36px;height:36px;border-radius:50%;background:#3E8C87;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;border:2px solid #F4F7EA">L</div><div style="width:36px;height:36px;border-radius:50%;background:#8B83B0;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;border:2px solid #F4F7EA;margin-left:-12px">M</div></div>
+         </div>
+
+         <div style="background:#fff;border:1px solid #E3E6D2;border-radius:22px;padding:17px 18px">
+           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:13px">
+             <span class="bric" style="font-size:16px;font-weight:700">Heute essen</span>
+             <span style="font-size:12px;color:#8B83B0;font-weight:600">3 Mahlzeiten</span>
+           </div>
+           <div style="display:flex;flex-direction:column;gap:12px">
+             <div style="display:flex;align-items:center;gap:12px"><div style="width:9px;height:9px;border-radius:50%;background:#E0A94B"></div><span style="flex:1;font-size:14.5px;font-weight:600">Frühstück · Overnight Oats</span><span class="mono" style="font-weight:700;font-size:13px;color:#3E8C87">340</span></div>
+             <div style="display:flex;align-items:center;gap:12px"><div style="width:9px;height:9px;border-radius:50%;background:#3E8C87"></div><span style="flex:1;font-size:14.5px;font-weight:600">Mittag · Linsen-Curry</span><span class="mono" style="font-weight:700;font-size:13px;color:#3E8C87">518</span></div>
+             <div style="display:flex;align-items:center;gap:12px"><div style="width:9px;height:9px;border-radius:50%;background:#8B83B0"></div><span style="flex:1;font-size:14.5px;font-weight:600">Abend · Ofengemüse-Bowl</span><span class="mono" style="font-weight:700;font-size:13px;color:#3E8C87">411</span></div>
+           </div>
+         </div>
+
+         <div style="display:flex;gap:12px">
+           <div onClick="{{ goEinkauf }}" style="flex:1;background:#fff;border:1px solid #E3E6D2;border-radius:20px;padding:15px 16px;cursor:pointer" style-active="transform:scale(.97)">
+             <div class="mono" style="font-size:10px;letter-spacing:.08em;color:#8B83B0;font-weight:700;margin-bottom:8px">EINKAUF OFFEN</div>
+             <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="mono" style="font-weight:700;font-size:20px">{{ shopChecked }}/{{ shopTotal }}</span><span style="font-size:11px;color:#8B83B0;font-weight:600">Artikel</span></div>
+             <div style="height:8px;border-radius:999px;background:#EEF1DF;margin-top:9px;overflow:hidden"><div style="height:100%;background:#3E8C87;border-radius:999px;width:{{ shopProgress }}%;transition:width .3s"></div></div>
+           </div>
+           <sc-if value="{{ showCosts }}" hint-placeholder-val="{{ true }}">
+           <div style="flex:1;background:#E3EEB2;border-radius:20px;padding:15px 16px">
+             <div class="mono" style="font-size:10px;letter-spacing:.08em;color:#5A6B2E;font-weight:700;margin-bottom:8px">WOCHENBUDGET</div>
+             <div class="mono" style="font-weight:700;font-size:19px;color:#332D56">62,40 €</div>
+             <div style="font-size:11px;color:#6E7A45;font-weight:600;margin-top:2px">von 80 € · 78%</div>
+           </div>
+           </sc-if>
+         </div>
+
+         <div style="background:#fff;border:1px solid #E3E6D2;border-radius:22px;padding:16px 18px">
+           <div class="mono" style="font-size:10px;letter-spacing:.08em;color:#8B83B0;font-weight:700;margin-bottom:12px">BALD ABLAUFEND</div>
+           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:11px"><span style="font-size:14.5px;font-weight:600">Skyr Natur</span><span style="font-size:11px;font-weight:700;color:#B14A28;background:rgba(177,74,40,.1);padding:3px 11px;border-radius:999px">in 2 Tagen</span></div>
+           <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:14.5px;font-weight:600">Möhren</span><span style="font-size:11px;font-weight:700;color:#8A6420;background:rgba(224,169,75,.16);padding:3px 11px;border-radius:999px">in 4 Tagen</span></div>
+         </div>
+
+         <div style="display:flex;justify-content:space-between;align-items:center;margin-top:2px">
+           <span class="bric" style="font-size:16px;font-weight:700">Favoriten</span>
+           <span onClick="{{ goRezepte }}" style="font-size:12.5px;color:#3E8C87;cursor:pointer;font-weight:700">Alle →</span>
+         </div>
+         <div style="display:flex;gap:12px">
+           <sc-for list="{{ favCards }}" as="r" hint-placeholder-count="3">
+             <div onClick="{{ r.onOpen }}" style="flex:1;cursor:pointer;background:#fff;border:1px solid #E3E6D2;border-radius:18px;overflow:hidden" style-active="transform:scale(.97)">
+               <div style="height:64px;background:{{ r.thumb }};display:flex;align-items:center;justify-content:center">
+                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h0a2 2 0 0 0 2-2V2M5 2v20M7 2v7M11 2v20c3 0 5-2 5-8s-2-10-5-10Z"/></svg>
+               </div>
+               <div style="padding:9px 10px 11px"><div style="font-size:12.5px;font-weight:700;line-height:1.15">{{ r.name }}</div><div class="mono" style="font-size:10px;color:#8B83B0;margin-top:4px">{{ r.kcal }} kcal</div></div>
+             </div>
+           </sc-for>
+         </div>
+       </div>
+     </sc-if>
+
+     <!-- ===================== REZEPTE ===================== -->
+     <sc-if value="{{ isRezepte }}" hint-placeholder-val="{{ false }}">
+       <div style="padding:8px 18px 22px;display:flex;flex-direction:column;gap:14px;animation:nhfade .3s ease">
+         <div class="bric" style="font-size:27px;font-weight:800;letter-spacing:-.02em;margin-top:4px">Rezepte</div>
+         <div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #E3E6D2;border-radius:14px;padding:12px 15px">
+           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8B83B0" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+           <input value="{{ query }}" onInput="{{ onQuery }}" placeholder="Rezept oder Zutat suchen …" style="border:0;outline:0;background:transparent;font-size:14px;flex:1;font-family:inherit;color:#332D56">
+         </div>
+         <div style="display:flex;gap:8px;flex-wrap:wrap">
+           <div onClick="{{ toggleVegan }}" style="font-size:12.5px;font-weight:700;padding:8px 15px;border-radius:999px;cursor:pointer;border:1px solid {{ veganBorder }};color:#332D56;background:{{ veganBg }}">Vegan</div>
+           <div style="font-size:12.5px;font-weight:700;padding:8px 15px;border-radius:999px;border:1px solid #E3E6D2;background:#fff;color:#332D56">High Protein</div>
+           <div style="font-size:12.5px;font-weight:700;padding:8px 15px;border-radius:999px;border:1px solid #E3E6D2;background:#fff;color:#332D56">Schnell</div>
+         </div>
+         <sc-for list="{{ recipeCards }}" as="r" hint-placeholder-count="3">
+           <div onClick="{{ r.onOpen }}" style="background:#fff;border:1px solid #E3E6D2;border-radius:22px;overflow:hidden;cursor:pointer" style-active="transform:scale(.99)">
+             <div style="height:104px;background:{{ r.thumb }};display:flex;align-items:center;justify-content:center;position:relative">
+               <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h0a2 2 0 0 0 2-2V2M5 2v20M7 2v7M11 2v20c3 0 5-2 5-8s-2-10-5-10Z"/></svg>
+               <span style="position:absolute;top:11px;left:11px;font-size:10.5px;font-weight:700;background:{{ r.tagBg }};color:{{ r.tagColor }};padding:3px 10px;border-radius:999px">{{ r.tag }}</span>
+               <span onClick="{{ r.onFav }}" style="position:absolute;top:9px;right:9px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;color:{{ r.favColor }}">{{ r.favIcon }}</span>
+             </div>
+             <div style="padding:13px 15px 15px">
+               <div style="font-weight:700;font-size:15px">{{ r.name }}</div>
+               <div style="display:flex;align-items:center;gap:12px;margin-top:8px;font-size:11.5px;color:#8B83B0;font-weight:600">
+                 <span style="display:flex;align-items:center;gap:4px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span class="mono">{{ r.time }} Min</span></span>
+                 <span class="mono">{{ r.kcal }} kcal</span>
+               </div>
+               <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:12px">
+                 <div style="text-align:center;background:rgba(62,140,135,.12);border-radius:10px;padding:7px 2px"><div class="mono" style="font-weight:700;font-size:12.5px;color:#3E8C87">{{ r.protein }}g</div><div style="font-size:8px;font-weight:700;letter-spacing:.04em;color:#3E8C87;opacity:.75;text-transform:uppercase;margin-top:1px">Protein</div></div>
+                 <div style="text-align:center;background:rgba(224,169,75,.14);border-radius:10px;padding:7px 2px"><div class="mono" style="font-weight:700;font-size:12.5px;color:#C08A2E">{{ r.carbs }}g</div><div style="font-size:8px;font-weight:700;letter-spacing:.04em;color:#C08A2E;opacity:.85;text-transform:uppercase;margin-top:1px">Carbs</div></div>
+                 <div style="text-align:center;background:rgba(139,131,176,.16);border-radius:10px;padding:7px 2px"><div class="mono" style="font-weight:700;font-size:12.5px;color:#8B83B0">{{ r.fat }}g</div><div style="font-size:8px;font-weight:700;letter-spacing:.04em;color:#8B83B0;text-transform:uppercase;margin-top:1px">Fett</div></div>
+               </div>
+               <sc-if value="{{ showCosts }}" hint-placeholder-val="{{ true }}">
+               <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:12px;border-top:1px solid #EEF1DF"><span style="font-size:11px;color:#8B83B0;font-weight:600">pro Portion</span><span class="mono" style="font-weight:700;font-size:15px;color:#3E8C87">{{ r.cost }}</span></div>
+               </sc-if>
+             </div>
+           </div>
+         </sc-for>
+       </div>
+     </sc-if>
+
+     <!-- ===================== PLAN ===================== -->
+     <sc-if value="{{ isPlan }}" hint-placeholder-val="{{ false }}">
+       <div style="padding:8px 18px 22px;display:flex;flex-direction:column;gap:14px;animation:nhfade .3s ease">
+         <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
+           <span style="font-size:22px;color:#B0AAC6;cursor:pointer">‹</span>
+           <span class="bric" style="font-size:22px;font-weight:800;letter-spacing:-.02em">12.–18. Nov.</span>
+           <span style="font-size:22px;color:#B0AAC6;cursor:pointer">›</span>
+         </div>
+         <div style="display:flex;gap:12px">
+           <div style="flex:1;background:#fff;border:1px solid #E3E6D2;border-radius:18px;padding:14px;text-align:center"><div class="mono" style="font-weight:700;font-size:19px">Ø 490</div><div style="font-size:11px;color:#8B83B0;margin-top:3px;font-weight:600">kcal / Tag</div></div>
+           <sc-if value="{{ showCosts }}" hint-placeholder-val="{{ true }}"><div style="flex:1;background:#fff;border:1px solid #E3E6D2;border-radius:18px;padding:14px;text-align:center"><div class="mono" style="font-weight:700;font-size:19px;color:#3E8C87">62 €</div><div style="font-size:11px;color:#8B83B0;margin-top:3px;font-weight:600">Woche</div></div></sc-if>
+         </div>
+         <sc-for list="{{ planDays }}" as="d" hint-placeholder-count="2">
+           <div style="background:#fff;border:1px solid #E3E6D2;border-radius:22px;padding:15px 16px">
+             <div style="display:flex;justify-content:space-between;margin-bottom:11px"><span class="bric" style="font-weight:700;font-size:15px">{{ d.day }}</span><span style="font-size:11.5px;color:#8B83B0;font-weight:600">{{ d.count }} geplant</span></div>
+             <div style="display:flex;flex-direction:column;gap:8px">
+               <sc-for list="{{ d.meals }}" as="m" hint-placeholder-count="2">
+                 <div style="display:flex;align-items:center;gap:10px"><span style="font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#3E8C87;width:46px">{{ m.slot }}</span><span style="flex:1;font-size:13.5px;font-weight:600;padding:9px 12px;border-radius:11px;background:#EAF5F4;border:1px solid #C7E6E4">{{ m.recipe }}</span></div>
+               </sc-for>
+               <div style="display:flex;align-items:center;gap:10px"><span style="width:46px"></span><span style="flex:1;font-size:13px;font-weight:600;padding:9px 12px;border-radius:11px;border:1px dashed #C7CBB4;color:#B0AAC6;background:#FAFBF2">+ Hinzufügen</span></div>
+             </div>
+           </div>
+         </sc-for>
+         <div onClick="{{ addPlanToShop }}" style="background:#71C0BB;color:#332D56;text-align:center;font-weight:800;font-size:15px;padding:15px;border-radius:14px;cursor:pointer;margin-top:2px" style-active="transform:scale(.98)">Einkaufsliste aus Plan erstellen</div>
+       </div>
+     </sc-if>
+
+     <!-- ===================== EINKAUF ===================== -->
+     <sc-if value="{{ isEinkauf }}" hint-placeholder-val="{{ false }}">
+       <div style="padding:8px 18px 22px;display:flex;flex-direction:column;gap:14px;animation:nhfade .3s ease">
+         <div class="bric" style="font-size:26px;font-weight:800;letter-spacing:-.02em;margin-top:4px">Wocheneinkauf</div>
+         <div style="background:#fff;border:1px solid #E3E6D2;border-radius:20px;padding:14px 16px">
+           <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px"><span style="font-size:13px;color:#8B83B0;font-weight:600"><span class="mono">{{ shopChecked }}</span> von {{ shopTotal }} erledigt</span><sc-if value="{{ showCosts }}" hint-placeholder-val="{{ true }}"><span class="mono" style="font-weight:700;font-size:16px;color:#3E8C87">{{ shopSum }}</span></sc-if></div>
+           <div style="height:9px;border-radius:999px;background:#EEF1DF;overflow:hidden"><div style="height:100%;background:#3E8C87;border-radius:999px;width:{{ shopProgress }}%;transition:width .3s"></div></div>
+         </div>
+         <sc-for list="{{ shopGroups }}" as="g" hint-placeholder-count="3">
+           <div>
+             <div class="mono" style="font-size:10px;letter-spacing:.08em;color:#8B83B0;font-weight:700;text-transform:uppercase;margin:2px 2px 9px">{{ g.cat }}</div>
+             <div style="background:#fff;border:1px solid #E3E6D2;border-radius:18px;padding:4px 14px">
+               <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="2">
+                 <div onClick="{{ it.onToggle }}" style="display:flex;align-items:center;gap:13px;padding:12px 0;border-bottom:1px solid {{ it.divider }};cursor:pointer" style-active="opacity:.6">
+                   <span style="width:22px;height:22px;flex:none;border-radius:7px;border:2px solid {{ it.boxBorder }};background:{{ it.boxBg }};display:flex;align-items:center;justify-content:center">
+                     <sc-if value="{{ it.checked }}" hint-placeholder-val="{{ false }}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></sc-if>
+                   </span>
+                   <div style="flex:1;min-width:0"><div style="font-size:14.5px;font-weight:600;color:{{ it.nameColor }};text-decoration:{{ it.deco }}">{{ it.name }}</div><div class="mono" style="font-size:11px;color:#B0AAC6;margin-top:2px">{{ it.qty }}</div></div>
+                   <sc-if value="{{ showCosts }}" hint-placeholder-val="{{ true }}"><span class="mono" style="font-size:12.5px;font-weight:700;color:#332D56">{{ it.price }}</span></sc-if>
+                 </div>
+               </sc-for>
+             </div>
+           </div>
+         </sc-for>
+         <div style="text-align:center;font-size:13px;color:#B0AAC6;font-weight:600;padding:4px">+ Artikel hinzufügen</div>
+       </div>
+     </sc-if>
+
+     <!-- ===================== VORRAT ===================== -->
+     <sc-if value="{{ isVorrat }}" hint-placeholder-val="{{ false }}">
+       <div style="padding:8px 18px 22px;display:flex;flex-direction:column;gap:14px;animation:nhfade .3s ease">
+         <div class="bric" style="font-size:26px;font-weight:800;letter-spacing:-.02em;margin-top:4px">Vorrat</div>
+         <div style="display:flex;background:#fff;border:1px solid #E3E6D2;border-radius:14px;padding:4px;gap:2px">
+           <sc-for list="{{ vorratTabs }}" as="t" hint-placeholder-count="4">
+             <div onClick="{{ t.onClick }}" style="flex:1;text-align:center;font-size:12px;font-weight:700;padding:9px 0;border-radius:10px;cursor:pointer;background:{{ t.bg }};color:{{ t.color }}">{{ t.label }}</div>
+           </sc-for>
+         </div>
+         <sc-for list="{{ vorratItems }}" as="v" hint-placeholder-count="4">
+           <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #E3E6D2;border-radius:16px;padding:13px 15px;border-left:4px solid {{ v.edge }}">
+             <div style="flex:1"><div style="font-size:14.5px;font-weight:700">{{ v.name }}</div><div class="mono" style="font-size:11px;color:#8B83B0;margin-top:2px">{{ v.detail }}</div></div>
+             <span style="font-size:11px;font-weight:700;padding:3px 11px;border-radius:999px;background:{{ v.tagBg }};color:{{ v.tagColor }}">{{ v.tag }}</span>
+           </div>
+         </sc-for>
+         <div style="text-align:center;font-size:12px;color:#B0AAC6;font-weight:600;padding:4px">Beim Einkauf wird der Vorrat abgezogen</div>
+       </div>
+     </sc-if>
+
+   </div>
+
+   <!-- ===================== BOTTOM NAV ===================== -->
+   <div style="position:absolute;bottom:0;left:0;right:0;height:66px;background:#fff;border-top:1px solid #E3E6D2;display:flex;justify-content:space-around;align-items:center;padding-bottom:4px">
+     <div onClick="{{ navClick.start }}" style="display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:{{ navColors.start }}">
+       <div style="width:40px;height:26px;border-radius:9px;background:{{ navPill.start }};display:flex;align-items:center;justify-content:center"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg></div>
+       <span style="font-size:10px;font-weight:700">Start</span>
+     </div>
+     <div onClick="{{ navClick.rezepte }}" style="display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:{{ navColors.rezepte }}">
+       <div style="width:40px;height:26px;border-radius:9px;background:{{ navPill.rezepte }};display:flex;align-items:center;justify-content:center"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></div>
+       <span style="font-size:10px;font-weight:700">Rezepte</span>
+     </div>
+     <div onClick="{{ navClick.plan }}" style="display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:{{ navColors.plan }}">
+       <div style="width:40px;height:26px;border-radius:9px;background:{{ navPill.plan }};display:flex;align-items:center;justify-content:center"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2.5"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+       <span style="font-size:10px;font-weight:700">Plan</span>
+     </div>
+     <div onClick="{{ navClick.einkauf }}" style="display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:{{ navColors.einkauf }}">
+       <div style="width:40px;height:26px;border-radius:9px;background:{{ navPill.einkauf }};display:flex;align-items:center;justify-content:center"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1.4"/><circle cx="19" cy="21" r="1.4"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></div>
+       <span style="font-size:10px;font-weight:700">Einkauf</span>
+     </div>
+     <div onClick="{{ navClick.vorrat }}" style="display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:{{ navColors.vorrat }}">
+       <div style="width:40px;height:26px;border-radius:9px;background:{{ navPill.vorrat }};display:flex;align-items:center;justify-content:center"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18M5 8V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2M4 8h16l-1 12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 8Z"/><path d="M10 12v5M14 12v5"/></svg></div>
+       <span style="font-size:10px;font-weight:700">Vorrat</span>
+     </div>
+   </div>
+
+   <!-- ===================== AUTH OVERLAY ===================== -->
+   <sc-if value="{{ hasAuth }}" hint-placeholder-val="{{ false }}">
+     <div class="sa" style="position:absolute;inset:0;background:#F4F7EA;z-index:50;overflow-y:auto;animation:nhfade .25s ease">
+
+       <!-- LOGIN -->
+       <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ true }}">
+         <div style="min-height:772px;display:flex;flex-direction:column;padding:0 26px 30px">
+           <div style="padding-top:64px;text-align:center">
+             <div style="width:60px;height:60px;border-radius:20px;background:#71C0BB;display:flex;align-items:center;justify-content:center;margin:0 auto">
+               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#332D56" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>
+             </div>
+             <div class="bric" style="font-size:30px;font-weight:800;letter-spacing:-.02em;margin-top:20px">Willkommen zurück</div>
+             <div style="font-size:14px;color:#8B83B0;font-weight:600;margin-top:6px">Melde dich in eurem Haushalt an</div>
+           </div>
+           <div style="display:flex;flex-direction:column;gap:12px;margin-top:34px">
+             <div>
+               <div class="mono" style="font-size:10px;letter-spacing:.08em;color:#8B83B0;font-weight:700;margin:0 0 7px 2px">E-MAIL</div>
+               <div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #E3E6D2;border-radius:14px;padding:14px 16px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8B83B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 10 6 10-6"/></svg><input placeholder="lena@haushalt.de" style="border:0;outline:0;background:transparent;font-size:14.5px;flex:1;font-family:inherit;color:#332D56"></div>
+             </div>
+             <div>
+               <div class="mono" style="font-size:10px;letter-spacing:.08em;color:#8B83B0;font-weight:700;margin:0 0 7px 2px">PASSWORT</div>
+               <div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #E3E6D2;border-radius:14px;padding:14px 16px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8B83B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2.5"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><input type="password" value="demopass" style="border:0;outline:0;background:transparent;font-size:14.5px;flex:1;font-family:inherit;color:#332D56"></div>
+             </div>
+             <div style="text-align:right;font-size:12.5px;color:#3E8C87;font-weight:700;margin-top:2px;cursor:pointer">Passwort vergessen?</div>
+           </div>
+           <div onClick="{{ doLogin }}" style="background:#71C0BB;color:#332D56;text-align:center;font-weight:800;font-size:16px;padding:16px;border-radius:14px;cursor:pointer;margin-top:22px" style-active="transform:scale(.98)">Anmelden</div>
+           <div style="text-align:center;font-size:13.5px;color:#8B83B0;font-weight:600;margin-top:auto;padding-top:30px">Noch kein Konto? <span onClick="{{ goRegister }}" style="color:#3E8C87;font-weight:800;cursor:pointer">Registrieren</span></div>
+         </div>
+       </sc-if>
+
+       <!-- REGISTER -->
+       <sc-if value="{{ isRegister }}" hint-placeholder-val="{{ false }}">
+         <div style="min-height:772px;display:flex;flex-direction:column;padding:0 26px 30px">
+           <div style="padding-top:56px">
+             <div onClick="{{ goLogin }}" style="font-size:20px;color:#8B83B0;cursor:pointer;margin-bottom:22px">‹</div>
+             <div class="bric" style="font-size:29px;font-weight:800;letter-spacing:-.02em">Konto erstellen</div>
+             <div style="font-size:14px;color:#8B83B0;font-weight:600;margin-top:6px">In zwei Schritten startklar</div>
+           </div>
+           <div style="display:flex;flex-direction:column;gap:12px;margin-top:28px">
+             <div style="display:flex;gap:12px">
+               <div style="flex:1"><div class="mono" style="font-size:10px;letter-spacing:.08em;color:#8B83B0;font-weight:700;margin:0 0 7px 2px">VORNAME</div><div style="background:#fff;border:1px solid #E3E6D2;border-radius:14px;padding:14px 16px"><input placeholder="Lena" style="border:0;outline:0;background:transparent;font-size:14.5px;width:100%;font-family:inherit;color:#332D56"></div></div>
+               <div style="flex:1"><div class="mono" style="font-size:10px;letter-spacing:.08em;color:#8B83B0;font-weight:700;margin:0 0 7px 2px">NAME</div><div style="background:#fff;border:1px solid #E3E6D2;border-radius:14px;padding:14px 16px"><input placeholder="Berg" style="border:0;outline:0;background:transparent;font-size:14.5px;width:100%;font-family:inherit;color:#332D56"></div></div>
+             </div>
+             <div><div class="mono" style="font-size:10px;letter-spacing:.08em;color:#8B83B0;font-weight:700;margin:0 0 7px 2px">E-MAIL</div><div style="background:#fff;border:1px solid #E3E6D2;border-radius:14px;padding:14px 16px"><input placeholder="lena@haushalt.de" style="border:0;outline:0;background:transparent;font-size:14.5px;width:100%;font-family:inherit;color:#332D56"></div></div>
+             <div><div class="mono" style="font-size:10px;letter-spacing:.08em;color:#8B83B0;font-weight:700;margin:0 0 7px 2px">PASSWORT</div><div style="background:#fff;border:1px solid #E3E6D2;border-radius:14px;padding:14px 16px"><input type="password" value="demopass" style="border:0;outline:0;background:transparent;font-size:14.5px;width:100%;font-family:inherit;color:#332D56"></div><div style="font-size:11.5px;color:#B0AAC6;font-weight:600;margin:7px 0 0 2px">Mindestens 8 Zeichen</div></div>
+           </div>
+           <div onClick="{{ afterRegister }}" style="background:#71C0BB;color:#332D56;text-align:center;font-weight:800;font-size:16px;padding:16px;border-radius:14px;cursor:pointer;margin-top:24px" style-active="transform:scale(.98)">Weiter</div>
+           <div style="text-align:center;font-size:12px;color:#B0AAC6;font-weight:600;margin-top:16px;line-height:1.5">Mit „Weiter" stimmst du den Nutzungs-<br>bedingungen &amp; dem Datenschutz zu.</div>
+         </div>
+       </sc-if>
+
+       <!-- HOUSEHOLD ONBOARDING -->
+       <sc-if value="{{ isHousehold }}" hint-placeholder-val="{{ false }}">
+         <div style="min-height:772px;display:flex;flex-direction:column;padding:0 26px 30px">
+           <div style="padding-top:56px">
+             <div class="bric" style="font-size:29px;font-weight:800;letter-spacing:-.02em">Dein Haushalt</div>
+             <div style="font-size:14px;color:#8B83B0;font-weight:600;margin-top:6px">Rezepte, Einkauf &amp; Vorrat teilt ihr gemeinsam</div>
+           </div>
+           <div style="background:#332D56;border-radius:22px;padding:20px;color:#F4F7EA;margin-top:26px">
+             <div class="bric" style="font-size:17px;font-weight:700">Neuen Haushalt erstellen</div>
+             <div style="font-size:13px;color:#C9C5DC;margin-top:6px;line-height:1.45">Du wirst Administrator und lädst danach eine zweite Person ein.</div>
+             <div style="background:rgba(255,255,255,.07);border-radius:12px;padding:13px 15px;margin-top:14px"><input placeholder="z. B. Haushalt Berg" style="border:0;outline:0;background:transparent;font-size:14.5px;width:100%;font-family:inherit;color:#F4F7EA"></div>
+             <div onClick="{{ finishOnboarding }}" style="background:#71C0BB;color:#332D56;text-align:center;font-weight:800;font-size:15px;padding:13px;border-radius:12px;cursor:pointer;margin-top:14px" style-active="transform:scale(.98)">Haushalt erstellen</div>
+           </div>
+           <div style="display:flex;align-items:center;gap:12px;margin:22px 0"><div style="flex:1;height:1px;background:#E3E6D2"></div><span class="mono" style="font-size:11px;color:#B0AAC6;font-weight:700">ODER</span><div style="flex:1;height:1px;background:#E3E6D2"></div></div>
+           <div style="background:#fff;border:1px solid #E3E6D2;border-radius:22px;padding:20px">
+             <div class="bric" style="font-size:17px;font-weight:700">Einem Haushalt beitreten</div>
+             <div style="font-size:13px;color:#8B83B0;margin-top:6px;line-height:1.45;font-weight:500">Gib den Einladungscode ein, den du erhalten hast.</div>
+             <div style="display:flex;gap:9px;margin-top:14px">
+               <div style="flex:1;background:#F4F7EA;border:1px solid #E3E6D2;border-radius:12px;padding:13px 15px"><input placeholder="Code z. B. NH-4KX2" style="border:0;outline:0;background:transparent;font-size:14.5px;width:100%;font-family:inherit;color:#332D56"></div>
+               <div onClick="{{ finishOnboarding }}" style="background:#E3EEB2;color:#332D56;font-weight:800;font-size:14px;padding:13px 18px;border-radius:12px;cursor:pointer;display:flex;align-items:center" style-active="transform:scale(.98)">Beitreten</div>
+             </div>
+           </div>
+           <div style="text-align:center;font-size:12px;color:#B0AAC6;font-weight:600;margin-top:auto;padding-top:26px">In V1 gehörst du genau einem Haushalt an.</div>
+         </div>
+       </sc-if>
+
+     </div>
+   </sc-if>
+
+   <!-- ===================== DETAIL OVERLAY ===================== -->
+   <sc-if value="{{ hasDetail }}" hint-placeholder-val="{{ false }}">
+     <div class="sa" style="position:absolute;inset:0;background:#F4F7EA;z-index:20;overflow-y:auto;animation:nhfade .25s ease">
+       <div style="height:196px;background:{{ detail.thumb }};display:flex;align-items:center;justify-content:center;position:relative">
+         <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h0a2 2 0 0 0 2-2V2M5 2v20M7 2v7M11 2v20c3 0 5-2 5-8s-2-10-5-10Z"/></svg>
+         <span style="position:absolute;top:16px;left:56px;font-size:11px;font-weight:700;background:{{ detail.tagBg }};color:{{ detail.tagColor }};padding:4px 12px;border-radius:999px">{{ detail.tag }}</span>
+         <div onClick="{{ closeDetail }}" style="position:absolute;top:14px;left:14px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;font-size:19px;cursor:pointer;color:#332D56">‹</div>
+         <div onClick="{{ toggleFavDetail }}" style="position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;color:{{ detail.favColor }}">{{ detail.favIcon }}</div>
+       </div>
+       <div style="padding:18px 18px 26px;display:flex;flex-direction:column;gap:15px">
+         <div class="bric" style="font-size:25px;font-weight:800;letter-spacing:-.02em">{{ detail.name }}</div>
+
+         <!-- PORTION HERO -->
+         <div style="background:#332D56;border-radius:22px;padding:18px;color:#F4F7EA">
+           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">
+             <span class="mono" style="font-size:10px;letter-spacing:.1em;color:#71C0BB;font-weight:700">PORTIONEN</span>
+             <div style="display:flex;align-items:center;border:1.6px solid #71C0BB;border-radius:24px;overflow:hidden">
+               <div onClick="{{ dec }}" style="width:42px;height:40px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#71C0BB;cursor:pointer;user-select:none" style-active="background:rgba(113,192,187,.15)">−</div>
+               <div class="mono" style="width:44px;text-align:center;font-weight:700;font-size:19px;color:#F4F7EA">{{ detail.servings }}</div>
+               <div onClick="{{ inc }}" style="width:42px;height:40px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#71C0BB;cursor:pointer;user-select:none" style-active="background:rgba(113,192,187,.15)">+</div>
+             </div>
+           </div>
+           <div style="display:flex;gap:10px">
+             <div style="flex:1;text-align:center;background:rgba(255,255,255,.07);border-radius:14px;padding:12px 4px"><div class="mono" style="font-weight:700;font-size:21px;color:#71C0BB">{{ detail.kcalP }}</div><div style="font-size:9.5px;color:#C9C5DC;margin-top:3px;font-weight:600">kcal / Portion</div></div>
+             <sc-if value="{{ showCosts }}" hint-placeholder-val="{{ true }}"><div style="flex:1;text-align:center;background:rgba(255,255,255,.07);border-radius:14px;padding:12px 4px"><div class="mono" style="font-weight:700;font-size:21px;color:#E3EEB2">{{ detail.costP }}</div><div style="font-size:9.5px;color:#C9C5DC;margin-top:3px;font-weight:600">€ / Portion</div></div></sc-if>
+             <div style="flex:1;text-align:center;background:rgba(255,255,255,.07);border-radius:14px;padding:12px 4px"><div class="mono" style="font-weight:700;font-size:21px;color:#F4F7EA">{{ detail.proteinP }}g</div><div style="font-size:9.5px;color:#C9C5DC;margin-top:3px;font-weight:600">Eiweiß</div></div>
+           </div>
+           <div style="font-size:11px;color:#8B83B0;text-align:center;margin-top:12px">Mengen · Nährwerte · Kosten passen sich automatisch an</div>
+         </div>
+
+         <!-- NUTRITION RING -->
+         <div style="background:#fff;border:1px solid #E3E6D2;border-radius:22px;padding:18px 20px">
+           <div class="mono" style="font-size:10px;letter-spacing:.08em;color:#8B83B0;font-weight:700;margin-bottom:14px">NÄHRWERTE · PRO PORTION</div>
+           <div style="display:flex;align-items:center;gap:20px">
+             <div style="width:104px;height:104px;flex:none;border-radius:50%;background:{{ detail.ring }};display:flex;align-items:center;justify-content:center">
+               <div style="width:78px;height:78px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center"><span class="mono" style="font-weight:700;font-size:20px;line-height:1">{{ detail.kcalP }}</span><span style="font-size:9.5px;color:#8B83B0;font-weight:700">kcal</span></div>
+             </div>
+             <div style="flex:1;display:flex;flex-direction:column;gap:12px">
+               <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px"><span style="display:flex;align-items:center;gap:8px;font-weight:600"><span style="width:10px;height:10px;border-radius:3px;background:#3E8C87"></span>Eiweiß</span><span class="mono" style="font-weight:700">{{ detail.proteinP }}g</span></div>
+               <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px"><span style="display:flex;align-items:center;gap:8px;font-weight:600"><span style="width:10px;height:10px;border-radius:3px;background:#E0A94B"></span>Kohlenhydr.</span><span class="mono" style="font-weight:700">{{ detail.carbsP }}g</span></div>
+               <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px"><span style="display:flex;align-items:center;gap:8px;font-weight:600"><span style="width:10px;height:10px;border-radius:3px;background:#8B83B0"></span>Fett</span><span class="mono" style="font-weight:700">{{ detail.fatP }}g</span></div>
+             </div>
+           </div>
+         </div>
+
+         <!-- INGREDIENTS -->
+         <div>
+           <div style="display:flex;justify-content:space-between;align-items:baseline;margin:2px 2px 10px"><span class="bric" style="font-size:16px;font-weight:700">Zutaten</span><span style="font-size:12px;color:#8B83B0;font-weight:600">für {{ detail.servings }} Portionen</span></div>
+           <div style="background:#fff;border:1px solid #E3E6D2;border-radius:20px;padding:5px 16px">
+             <sc-for list="{{ detail.ingredients }}" as="ing" hint-placeholder-count="5">
+               <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #F0F2E3">
+                 <span style="font-size:14.5px;font-weight:600">{{ ing.name }}</span>
+                 <span style="display:flex;gap:12px;align-items:baseline"><span class="mono" style="font-weight:700;font-size:13.5px">{{ ing.amountLabel }}</span><sc-if value="{{ showCosts }}" hint-placeholder-val="{{ true }}"><span class="mono" style="font-size:12px;color:#B0AAC6;width:46px;text-align:right">{{ ing.cost }}</span></sc-if></span>
+               </div>
+             </sc-for>
+           </div>
+         </div>
+
+         <div style="display:flex;flex-direction:column;gap:10px;position:sticky;bottom:0;padding-top:4px">
+           <div onClick="{{ startCook }}" style="text-align:center;font-weight:800;font-size:15px;padding:15px;border-radius:14px;background:#71C0BB;color:#332D56;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px" style-active="transform:scale(.98)"><svg width="17" height="17" viewBox="0 0 24 24" fill="#332D56" stroke="none"><path d="M8 5v14l11-7z"/></svg> Kochen starten</div>
+           <div style="display:flex;gap:10px">
+             <div onClick="{{ planCurrent }}" style="flex:1;text-align:center;font-weight:800;font-size:14px;padding:14px;border-radius:14px;border:1px solid #C7CBB4;background:#fff;color:#3E8C87;cursor:pointer" style-active="transform:scale(.98)">Einplanen</div>
+             <div onClick="{{ addCurrent }}" style="flex:1;text-align:center;font-weight:800;font-size:14px;padding:14px;border-radius:14px;background:#E3EEB2;color:#332D56;cursor:pointer" style-active="transform:scale(.98)">+ Einkaufsliste</div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </sc-if>
+
+   <!-- ===================== KOCHMODUS OVERLAY ===================== -->
+   <sc-if value="{{ hasCook }}" hint-placeholder-val="{{ false }}">
+     <div style="position:absolute;inset:0;background:#332D56;color:#F4F7EA;z-index:30;display:flex;flex-direction:column">
+       <div style="padding:22px 20px 0;display:flex;align-items:center;justify-content:space-between">
+         <div class="bric" style="font-size:15px;font-weight:700;color:#71C0BB">{{ cook.name }}</div>
+         <div onClick="{{ cook.close }}" style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;color:#C9C5DC">✕</div>
+       </div>
+       <div style="padding:16px 20px 0">
+         <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px">
+           <span class="mono" style="font-weight:700;font-size:12px;letter-spacing:.08em;color:#8B83B0">SCHRITT {{ cook.stepNo }} / {{ cook.stepTotal }}</span>
+           <span style="font-size:12px;color:#8B83B0;font-weight:600">{{ cook.servings }} Portionen</span>
+         </div>
+         <div style="height:6px;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden"><div style="height:100%;background:#71C0BB;border-radius:999px;width:{{ cook.progress }}%;transition:width .3s"></div></div>
+       </div>
+       <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px">
+         <div class="bric" style="font-size:28px;line-height:1.28;font-weight:700;letter-spacing:-.02em;text-wrap:pretty">{{ cook.text }}</div>
+         <sc-if value="{{ cook.hasTimer }}" hint-placeholder-val="{{ false }}">
+           <div style="margin-top:26px;display:inline-flex;align-self:flex-start;align-items:center;gap:11px;background:rgba(113,192,187,.14);border:1.5px solid rgba(113,192,187,.4);border-radius:16px;padding:13px 19px;cursor:pointer">
+             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#71C0BB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg>
+             <span class="mono" style="font-weight:700;font-size:18px;color:#F4F7EA">{{ cook.timerLabel }}</span>
+             <span style="font-size:13px;color:#8B83B0;font-weight:600">Timer starten</span>
+           </div>
+         </sc-if>
+       </div>
+       <div style="padding:0 20px;margin-bottom:8px">
+         <div style="background:rgba(255,255,255,.06);border-radius:16px;padding:14px 16px">
+           <div class="mono" style="font-size:10px;letter-spacing:.08em;color:#8B83B0;font-weight:700;text-transform:uppercase;margin-bottom:10px">Zutaten im Blick</div>
+           <div style="display:flex;flex-wrap:wrap;gap:8px">
+             <sc-for list="{{ cook.ings }}" as="ci" hint-placeholder-count="4">
+               <span style="font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.09);color:#dcd8ce"><span class="mono" style="font-weight:700;color:#E3EEB2">{{ ci.amountLabel }}</span> {{ ci.name }}</span>
+             </sc-for>
+           </div>
+         </div>
+       </div>
+       <div style="padding:12px 20px 26px;display:flex;gap:12px">
+         <div onClick="{{ cook.prev }}" style="width:64px;flex:none;text-align:center;font-weight:700;font-size:17px;padding:16px 0;border-radius:16px;border:1.5px solid rgba(255,255,255,.18);color:{{ cookPrevColor }};cursor:pointer" style-active="background:rgba(255,255,255,.06)">‹</div>
+         <div onClick="{{ cook.next }}" style="flex:1;text-align:center;font-weight:800;font-size:16px;padding:16px 0;border-radius:16px;background:#71C0BB;color:#332D56;cursor:pointer" style-active="transform:scale(.98)">{{ cook.nextLabel }}</div>
+       </div>
+     </div>
+   </sc-if>
+
+   <!-- ===================== TOAST ===================== -->
+   <sc-if value="{{ toastShown }}" hint-placeholder-val="{{ false }}">
+     <div style="position:absolute;bottom:82px;left:50%;transform:translateX(-50%);background:#332D56;color:#F4F7EA;font-size:13px;font-weight:600;padding:12px 20px;border-radius:999px;z-index:40;box-shadow:0 6px 20px rgba(51,45,86,.3);white-space:nowrap;animation:toastin .25s ease">{{ toast }}</div>
+   </sc-if>
+
+  </div>
+ </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:800},&quot;startAuth&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Design&quot;},&quot;showCosts&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Design&quot;},&quot;startTab&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;start&quot;,&quot;rezepte&quot;,&quot;plan&quot;,&quot;einkauf&quot;,&quot;vorrat&quot;],&quot;default&quot;:&quot;start&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Design&quot;}}">
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    const TH = {
+      a:'linear-gradient(135deg,#3E8C87,#332D56)',
+      b:'linear-gradient(135deg,#71C0BB,#3E8C87)',
+      d:'linear-gradient(135deg,#3E8C87,#5FA85B)',
+    };
+    this.recipes = [
+      {id:'curry', name:'Linsen-Curry', base:2, time:35, vegan:true, thumb:TH.a, tag:'Vegan', tagBg:'rgba(62,140,135,.92)', tagColor:'#fff', tags:['Vegan','35 Min','einfach'], ings:[
+        {name:'Rote Linsen', amount:150, unit:'g', cat:'Vorrat & Trocken', kcal:525, protein:36, carbs:90, fat:3, cost:0.45},
+        {name:'Kokosmilch', amount:200, unit:'ml', cat:'Konserven', kcal:400, protein:4, carbs:6, fat:40, cost:0.70},
+        {name:'Möhren', amount:200, unit:'g', cat:'Obst & Gemüse', kcal:82, protein:2, carbs:19, fat:0.5, cost:0.30},
+        {name:'Zwiebel', amount:100, unit:'g', cat:'Obst & Gemüse', kcal:40, protein:1, carbs:9, fat:0.2, cost:0.15},
+        {name:'Currypaste', amount:20, unit:'g', cat:'Vorrat & Trocken', kcal:30, protein:1, carbs:4, fat:1, cost:0.20},
+      ], steps:[
+        {text:'Zwiebel und Möhren schälen und in kleine Würfel schneiden.', dur:0},
+        {text:'Zwiebel in etwas Öl glasig anschwitzen, Currypaste dazugeben und kurz mitrösten.', dur:3},
+        {text:'Rote Linsen und Möhren einrühren, mit Kokosmilch und 300 ml Wasser aufgießen.', dur:0},
+        {text:'Zugedeckt köcheln lassen, bis die Linsen weich sind. Gelegentlich umrühren.', dur:15},
+        {text:'Mit Salz abschmecken und servieren.', dur:0},
+      ]},
+      {id:'oats', name:'Overnight Oats', base:1, time:5, vegan:true, thumb:TH.b, tag:'Schnell', tagBg:'rgba(224,169,75,.92)', tagColor:'#fff', tags:['Vegan','5 Min'], ings:[
+        {name:'Haferflocken', amount:60, unit:'g', cat:'Vorrat & Trocken', kcal:222, protein:8, carbs:36, fat:4, cost:0.15},
+        {name:'Skyr Natur', amount:150, unit:'g', cat:'Milchprodukte', kcal:96, protein:16, carbs:6, fat:0.3, cost:0.55},
+        {name:'Beeren (TK)', amount:80, unit:'g', cat:'Obst & Gemüse', kcal:36, protein:1, carbs:6, fat:0.3, cost:0.40},
+      ], steps:[
+        {text:'Haferflocken und Skyr in ein Glas geben und gut verrühren.', dur:0},
+        {text:'Beeren unterheben, Glas verschließen.', dur:0},
+        {text:'Über Nacht im Kühlschrank ziehen lassen.', dur:0},
+      ]},
+      {id:'bowl', name:'Ofengemüse-Bowl', base:2, time:40, vegan:true, thumb:TH.d, tag:'Vegan', tagBg:'rgba(62,140,135,.92)', tagColor:'#fff', tags:['Vegan','40 Min'], ings:[
+        {name:'Süßkartoffel', amount:300, unit:'g', cat:'Obst & Gemüse', kcal:258, protein:5, carbs:60, fat:0.3, cost:0.90},
+        {name:'Kichererbsen', amount:240, unit:'g', cat:'Konserven', kcal:290, protein:15, carbs:40, fat:5, cost:0.55},
+        {name:'Kirschtomaten', amount:200, unit:'g', cat:'Obst & Gemüse', kcal:36, protein:2, carbs:6, fat:0.4, cost:0.80},
+        {name:'Olivenöl', amount:20, unit:'g', cat:'Vorrat & Trocken', kcal:180, protein:0, carbs:0, fat:20, cost:0.15},
+      ], steps:[
+        {text:'Backofen auf 200 °C vorheizen. Süßkartoffel würfeln.', dur:0},
+        {text:'Süßkartoffel und Kichererbsen mit Olivenöl und Gewürzen mischen.', dur:0},
+        {text:'Auf einem Blech verteilen und rösten, bis alles goldbraun ist.', dur:25},
+        {text:'Mit Kirschtomaten anrichten und servieren.', dur:0},
+      ]},
+    ];
+    this.catOrder = ['Obst & Gemüse','Milchprodukte','Konserven','Vorrat & Trocken'];
+    this.vTabDefs = [{k:'kuehl',label:'Kühlschr.'},{k:'gefrier',label:'Gefrier'},{k:'schrank',label:'Schrank'},{k:'keller',label:'Keller'}];
+    this.vorrat = [
+      {name:'Skyr Natur', amount:'500 g · offen', loc:'kuehl', tag:'MHD 2 T.', warn:true},
+      {name:'Möhren', amount:'700 g', loc:'kuehl', tag:'4 Tage', warn:false},
+      {name:'Butter', amount:'250 g', loc:'kuehl', tag:'3 Wo.', warn:false},
+      {name:'Eier', amount:'6 St.', loc:'kuehl', tag:'1 Wo.', warn:false},
+      {name:'Beeren (TK)', amount:'400 g', loc:'gefrier', tag:'—', warn:false},
+      {name:'Erbsen (TK)', amount:'500 g', loc:'gefrier', tag:'—', warn:false},
+      {name:'Haferflocken', amount:'800 g', loc:'schrank', tag:'6 Mon.', warn:false},
+      {name:'Rote Linsen', amount:'250 g', loc:'schrank', tag:'1 Jahr', warn:false},
+      {name:'Kartoffeln', amount:'2 kg', loc:'keller', tag:'—', warn:false},
+    ];
+    this.planDays = [
+      {day:'Mo · 12.', count:2, meals:[{slot:'Früh',recipe:'Overnight Oats'},{slot:'Mittag',recipe:'Linsen-Curry'}]},
+      {day:'Di · 13.', count:1, meals:[{slot:'Mittag',recipe:'Ofengemüse-Bowl'}]},
+    ];
+    let nid = 0;
+    this.state = {
+      tab: props.startTab || 'start',
+      authed: !props.startAuth, authStep: 'login',
+      detailId: null, cookId: null, cookStep: 0,
+      fav: {curry:true, oats:false, bowl:false},
+      servings: {}, query: '', vegan: false, vorratTab: 'kuehl', toast: null,
+      shopping: [
+        {id:++nid, name:'Möhren', amount:700, unit:'g', cat:'Obst & Gemüse', cost:0.90, checked:false},
+        {id:++nid, name:'Zwiebeln', amount:3, unit:'St.', cat:'Obst & Gemüse', cost:0.40, checked:false},
+        {id:++nid, name:'Ingwer', amount:1, unit:'St.', cat:'Obst & Gemüse', cost:0.30, checked:true},
+        {id:++nid, name:'Skyr Natur', amount:500, unit:'g', cat:'Milchprodukte', cost:1.20, checked:false},
+        {id:++nid, name:'Butter', amount:250, unit:'g', cat:'Milchprodukte', cost:0.90, checked:true},
+        {id:++nid, name:'Rote Linsen', amount:500, unit:'g', cat:'Vorrat & Trocken', cost:1.10, checked:false},
+      ],
+    };
+    this._nid = nid;
+    this._toastT = null;
+  }
+
+  money(n){ return n.toFixed(2).replace('.',',') + ' €'; }
+  amt(v, unit){
+    if(unit==='g'||unit==='ml') return Math.round(v)+' '+unit;
+    let r = Math.round(v*10)/10;
+    return (r % 1 === 0 ? r.toFixed(0) : r.toFixed(1).replace('.',',')) + ' ' + unit;
+  }
+  showToast(msg){ clearTimeout(this._toastT); this.setState({toast: msg}); this._toastT = setTimeout(()=> this.setState({toast:null}), 2400); }
+  go(tab){ this.setState({tab, detailId:null}); }
+
+  recipeStats(r){ let k=0,c=0,p=0,cb=0,f=0; r.ings.forEach(i=>{ k+=i.kcal; c+=i.cost; p+=i.protein; cb+=i.carbs; f+=i.fat; });
+    return { kcalP:Math.round(k/r.base), costP:c/r.base, proteinP:Math.round(p/r.base), carbsP:Math.round(cb/r.base), fatP:Math.round(f/r.base) }; }
+
+  addRecipeToShopping(r, servings){
+    const f = servings / r.base;
+    let shop = this.state.shopping.map(x=>({...x}));
+    let added = 0;
+    r.ings.forEach(i=>{
+      const amt = i.amount*f, cost = i.cost*f;
+      const ex = shop.find(s=> s.name.toLowerCase()===i.name.toLowerCase() && s.unit===i.unit && !s.checked);
+      if(ex){ ex.amount += amt; ex.cost += cost; }
+      else { shop.push({id:++this._nid, name:i.name, amount:amt, unit:i.unit, cat:i.cat, cost, checked:false}); }
+      added++;
+    });
+    this.setState({shopping:shop, tab:'einkauf', detailId:null});
+    this.showToast(added + ' Zutaten zu „Wocheneinkauf" hinzugefügt');
+  }
+
+  renderVals(){
+    const s = this.state;
+    const showCosts = this.props.showCosts !== false;
+    const ON = '#3E8C87', OFF = '#8B83B0';
+
+    const keys = ['start','rezepte','plan','einkauf','vorrat'];
+    const navColors={}, navPill={}, navClick={};
+    keys.forEach(k=>{
+      navColors[k] = s.tab===k ? ON : OFF;
+      navPill[k]   = s.tab===k ? 'rgba(113,192,187,.2)' : 'transparent';
+      navClick[k]  = ()=> this.go(k);
+    });
+
+    const mkCard = (r)=>{
+      const st = this.recipeStats(r);
+      return { id:r.id, name:r.name, kcal:st.kcalP, cost:this.money(st.costP), time:r.time,
+        protein:st.proteinP, carbs:st.carbsP, fat:st.fatP, thumb:r.thumb, tag:r.tag, tagBg:r.tagBg, tagColor:r.tagColor,
+        favIcon: s.fav[r.id] ? '♥' : '♡', favColor: s.fav[r.id] ? '#B14A28' : '#8B83B0',
+        onOpen: ()=> this.setState({detailId:r.id}),
+        onFav: (e)=>{ if(e&&e.stopPropagation)e.stopPropagation(); this.setState({fav:{...s.fav,[r.id]:!s.fav[r.id]}}); } };
+    };
+    let list = this.recipes;
+    if(s.query.trim()) list = list.filter(r=> r.name.toLowerCase().includes(s.query.trim().toLowerCase()));
+    if(s.vegan) list = list.filter(r=> r.vegan);
+    const recipeCards = list.map(mkCard);
+    const favCards = this.recipes.filter(r=> s.fav[r.id]).map(mkCard);
+    const favShown = favCards.length ? favCards : this.recipes.slice(0,3).map(mkCard);
+
+    let detail = null;
+    const r = this.recipes.find(x=> x.id===s.detailId);
+    if(r){
+      const serv = s.servings[r.id] || r.base;
+      const f = serv / r.base;
+      let k=0,p=0,c=0,ft=0,cost=0;
+      const ingredients = r.ings.map(i=>{ k+=i.kcal; p+=i.protein; c+=i.carbs; ft+=i.fat; cost+=i.cost;
+        return { name:i.name, amountLabel:this.amt(i.amount*f, i.unit), cost:this.money(i.cost*f) }; });
+      const pP=p/r.base, cP=c/r.base, fP=ft/r.base;
+      const gp=Math.round(pP), gc=Math.round(cP), gf=Math.round(fP);
+      const tot=gp+gc+gf||1;
+      const a1=Math.round(gp/tot*100), a2=a1+Math.round(gc/tot*100);
+      detail = {
+        id:r.id, name:r.name, tag:r.tag, tagBg:r.tagBg, tagColor:r.tagColor, thumb:r.thumb, servings:serv,
+        kcalP: Math.round(k/r.base), proteinP:gp, carbsP:gc, fatP:gf, costP: this.money(cost/r.base),
+        ring:'conic-gradient(#3E8C87 0 '+a1+'%, #E0A94B '+a1+'% '+a2+'%, #8B83B0 '+a2+'% 100%)',
+        favIcon: s.fav[r.id] ? '♥' : '♡', favColor: s.fav[r.id] ? '#B14A28' : '#8B83B0',
+        ingredients,
+      };
+    }
+
+    let cook = null;
+    const cr = this.recipes.find(x=> x.id===s.cookId);
+    if(cr){
+      const steps = cr.steps || [];
+      const idx = Math.min(s.cookStep, steps.length-1);
+      const cur = steps[idx] || {text:'',dur:0};
+      const serv = s.servings[cr.id] || cr.base;
+      const f = serv / cr.base;
+      cook = {
+        name: cr.name, stepNo: idx+1, stepTotal: steps.length,
+        text: cur.text, hasTimer: cur.dur>0, timerLabel: cur.dur>0 ? cur.dur+' Min' : '',
+        progress: Math.round((idx+1)/steps.length*100), isFirst: idx===0, servings: serv,
+        ings: cr.ings.map(i=>({ name:i.name, amountLabel:this.amt(i.amount*f,i.unit) })),
+        prev: ()=> this.setState({cookStep: Math.max(0, idx-1)}),
+        next: ()=>{ if(idx>=steps.length-1){ this.setState({cookId:null,cookStep:0}); this.showToast('Guten Appetit! 🍽'); } else this.setState({cookStep: idx+1}); },
+        close: ()=> this.setState({cookId:null, cookStep:0}),
+        nextLabel: idx>=steps.length-1 ? 'Fertig' : 'Weiter',
+      };
+    }
+
+    const checkedN = s.shopping.filter(x=>x.checked).length;
+    const total = s.shopping.length;
+    const sumCost = s.shopping.reduce((a,x)=> a + (x.checked?0:x.cost), 0);
+    const shopGroups = this.catOrder.map(cat=>{
+      const arr = s.shopping.filter(x=> x.cat===cat);
+      const items = arr.map((it,i)=>({
+        id:it.id, name:it.name, qty:this.amt(it.amount,it.unit), price:this.money(it.cost),
+        checked: it.checked,
+        boxBorder: it.checked ? ON : '#C7CBB4', boxBg: it.checked ? ON : '#fff',
+        nameColor: it.checked ? '#B0AAC6' : '#332D56', deco: it.checked ? 'line-through' : 'none',
+        divider: i===arr.length-1 ? 'transparent' : '#F0F2E3',
+        onToggle: ()=>{ this.setState({shopping: s.shopping.map(x=> x.id===it.id? {...x,checked:!x.checked}:x)}); },
+      }));
+      return {cat, items};
+    }).filter(g=> g.items.length);
+
+    const vorratTabs = this.vTabDefs.map(t=>({
+      label:t.label, onClick:()=> this.setState({vorratTab:t.k}),
+      bg: s.vorratTab===t.k ? '#332D56' : 'transparent',
+      color: s.vorratTab===t.k ? '#F4F7EA' : '#8B83B0',
+    }));
+    const vorratItems = this.vorrat.filter(v=> v.loc===s.vorratTab).map(v=>({
+      name:v.name, detail:v.amount, tag:v.tag,
+      edge: v.warn ? '#B14A28' : '#71C0BB',
+      tagBg: v.warn ? 'rgba(177,74,40,.1)' : 'rgba(224,169,75,.16)',
+      tagColor: v.warn ? '#B14A28' : '#8A6420',
+    }));
+
+    return {
+      showCosts,
+      hasAuth: !s.authed,
+      isLogin: s.authStep==='login', isRegister: s.authStep==='register', isHousehold: s.authStep==='household',
+      goRegister: ()=> this.setState({authStep:'register'}),
+      goLogin: ()=> this.setState({authStep:'login'}),
+      doLogin: ()=> this.setState({authed:true, tab:'start'}),
+      afterRegister: ()=> this.setState({authStep:'household'}),
+      finishOnboarding: ()=>{ this.setState({authed:true, tab:'start'}); this.showToast('Willkommen bei NutriHome!'); },
+      logout: ()=> this.setState({authed:false, authStep:'login', detailId:null, cookId:null}),
+      isStart: s.tab==='start', isRezepte: s.tab==='rezepte', isPlan: s.tab==='plan', isEinkauf: s.tab==='einkauf', isVorrat: s.tab==='vorrat',
+      navColors, navPill, navClick,
+      goRezepte: ()=>this.go('rezepte'), goEinkauf: ()=>this.go('einkauf'),
+      recipeCards, favCards: favShown,
+      query: s.query, onQuery: (e)=> this.setState({query:e.target.value}),
+      toggleVegan: ()=> this.setState({vegan:!s.vegan}),
+      veganBorder: s.vegan? '#71C0BB':'#E3E6D2', veganBg: s.vegan? '#71C0BB':'#fff',
+      hasDetail: !!detail, detail,
+      closeDetail: ()=> this.setState({detailId:null}),
+      inc: ()=>{ const cur=s.servings[r.id]||r.base; this.setState({servings:{...s.servings,[r.id]:Math.min(12,cur+1)}}); },
+      dec: ()=>{ const cur=s.servings[r.id]||r.base; this.setState({servings:{...s.servings,[r.id]:Math.max(1,cur-1)}}); },
+      toggleFavDetail: ()=> this.setState({fav:{...s.fav,[r.id]:!s.fav[r.id]}}),
+      addCurrent: ()=> this.addRecipeToShopping(r, s.servings[r.id]||r.base),
+      planCurrent: ()=> this.showToast(r.name + ' eingeplant'),
+      startCook: ()=> this.setState({cookId:r.id, cookStep:0}),
+      hasCook: !!cook, cook, cookPrevColor: cook && cook.isFirst ? 'rgba(255,255,255,.25)' : '#dcd8ce',
+      shopChecked: checkedN, shopTotal: total, shopProgress: total? Math.round(checkedN/total*100):0,
+      shopSum: this.money(sumCost), shopGroups,
+      vorratTabs, vorratItems, planDays: this.planDays,
+      addPlanToShop: ()=> this.addRecipeToShopping(this.recipes.find(x=>x.id==='bowl'),2),
+      toast: s.toast, toastShown: !!s.toast,
+    };
+  }
+}
+</script>
+</body>
+</html>
